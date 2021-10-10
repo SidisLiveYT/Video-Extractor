@@ -8,7 +8,7 @@
 
 ## About
 
-Music Extractor is a Extractor/Scrapper and Helps Players to fetch data from youtube-dl, as Per reduces extra work and credentials.
+Music Extractor is a Extractor/Scrapper and Helps Players to fetch data from youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
 
 - Object-oriented
 - Customisable Extractors

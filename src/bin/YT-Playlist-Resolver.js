@@ -1,5 +1,5 @@
 const { search } = require('play-dl');
-const YoutubeDLExtractor = require('./Tracks-Extractor');
+const YoutubeDLExtractor = require('./Track-Extractor');
 
 async function YoutubePlaylistResolver(Url) {
   const PlaylistData = search(Url, {

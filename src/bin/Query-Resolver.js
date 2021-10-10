@@ -1,23 +1,35 @@
-const { validate } = require('play-dl');
-const YoutubeDLExtractor = require('./Tracks-Extractor');
-const YoutubePlaylistResolver = require('./YT-Playlist-Resolver');
+const { validate } = require('play-dl')
+const YoutubeDLExtractor = require('./Track-Extractor')
+const YoutubePlaylistResolver = require('./YT-Playlist-Resolver')
 
 async function QueryResolver(Query) {
-  const ValidateUrlResult = validate(Query);
-  const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/;
+  const SoundCloundUrlRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc)\/(.*)$/
+  if (Query.match(SoundCloundUrlRegex)) {
+    const YoutubeDLTracks = {
+      playlist: Query.match(SoundCloundUrlRegex)[3]
+        ? Query.match(SoundCloundUrlRegex)[3].includes('/sets/')
+        : false,
+      tracks: [],
+    }
+    return YoutubeDLTracks
+  }
+  const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/
+  const ValidateUrlResult = await validate(Query)
   const YoutubeDLTracks = {
     playlist:
-      ValidateUrlResult.includes('playlist')
-      ?? ValidateUrlResult.includes('album')
-      ?? false,
+      !ValidateUrlResult ??
+      ValidateUrlResult.includes('playlist') ??
+      ValidateUrlResult.includes('album') ??
+      false,
     tracks:
-      Query.match(YoutubeUrlRegex)
-      && (ValidateUrlResult.includes('playlist')
-        || ValidateUrlResult.includes('album'))
+      Query.match(YoutubeUrlRegex) &&
+      ValidateUrlResult &&
+      (ValidateUrlResult.includes('playlist') ||
+        ValidateUrlResult.includes('album'))
         ? await YoutubePlaylistResolver(Query)
         : [await YoutubeDLExtractor(Query)],
-  };
-  return YoutubeDLTracks;
+  }
+  return YoutubeDLTracks
 }
 
-module.exports = QueryResolver;
+module.exports = QueryResolver
