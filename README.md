@@ -2,7 +2,7 @@
   <br />
   <br />
   <p>
-<h1>Music Extractor</h1>
+<h1>Video Extractor</h1>
   </p>
 </div>
 
@@ -11,9 +11,11 @@
 Music Extractor is a Extractor/Scrapper and Helps Players to fetch data from youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
 
 - Object-oriented
+- Supports 700+ Website's Urls and Even Youtube Search
+- Delay/Buffer Timeout is max 3 seconds on tracks and 7 sec for Playlists
 - Customisable Extractors
 - Performant
-- 100% coverage of youtube-dl
+- 100% coverage of youtube-dl and custom extractors
 
 ## Installation
 
@@ -22,17 +24,50 @@ Music Extractor is a Extractor/Scrapper and Helps Players to fetch data from you
 ```
 npm install video-extractor
 ```
+
 ## Example usage
 
 Extractor Video/Playlist/Album Data from any Platform :-
+
 ```
 const { Extractor } = require('video-extractor') //For CommonJS
-OR
+                            OR
 import { Extractor } from 'video-extractor' //for ES6
 
 
-var TracksData = await Extractor(Url || Query)
+var Tracks = await Extractor(Url || Query)
 ```
+
+## Strucutre of Tracks
+
+```
+Tracks : {
+  playlist : Boolean,
+  tracks : [
+    {
+      Id: 0,
+      url: String,
+      title: String,
+      author: String,
+      author_link: String,
+      description: String,
+      custom_extractor: `youtube-dl`,
+      duration: 0,
+      stream_url: String,
+      orignal_extractor: 'youtbe' | 'spotify' | 'facebook' | 'arbitary',
+      thumbnail: String,
+      channelId: 0 || String,
+      channel_url: String,
+      likes: 0,
+      is_live: false,
+      dislikes: 0,
+}]
+}
+```
+
+- `Tracks.tracks[0].stream_url can be used in terms of stream value in @discordjs/voice or any other Audio package .`
+- `Object can be seen null or undefined based on platform , like channelId and channel_url isn't present for spotify and soundcloud , But most usable stuff will be there for all shorts of Videos`
+
 ## Links
 
 - [Youtube-dl](https://www.npmjs.com/package/youtube-dl-exec)
