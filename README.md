@@ -36,8 +36,8 @@ var TracksData = await Extractor(Url || Query)
 ## Links
 
 - [Youtube-dl](https://www.npmjs.com/package/youtube-dl-exec)
-- [Source Code](https://github.com/Jericho-Player/Music-Extractor.git)
-- [GitHub Repo Link](https://github.com/Jericho-Player/Music-Extractor)
+- [Source Code](https://github.com/SidisLiveYT/Video-Extractor.git)
+- [GitHub Repo Link](https://github.com/SidisLiveYT/Video-Extractor)
 - [NPM Package](https://www.npmjs.com/package/video-extractor)
 - [Yarn Package](https://yarn.pm/video-extractor)
 
