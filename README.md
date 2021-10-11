@@ -8,9 +8,10 @@
 
 ## About
 
-Music Extractor is a Extractor/Scrapper and Helps Players to fetch data from youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
+Video Extractor is a Extractor/Scrapper and Helps Players to fetch data from youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
 
-- Object-oriented
+- Object-oriented , means Value returned in a structure format
+- Python Based Browser Extrator -> Need to have Python installed in binary $PATH
 - Supports 700+ Website's Urls and Even Youtube Search
 - Delay/Buffer Timeout is max 3 seconds on tracks and 7 sec for Playlists
 - Customisable Extractors
