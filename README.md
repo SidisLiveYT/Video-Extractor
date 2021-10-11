@@ -11,7 +11,7 @@
 Video Extractor is a Extractor/Scrapper and Helps Players to fetch data from custom-youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
 
 - Object-oriented , means Value returned in a structure format
-- Python Based Browser Extrator -> Need to have Python installed in binary $PATH
+- Python Based Browser Extrator -> Need to have Python installed in binary \$PATH
 - Supports 700+ Website's Urls and Even Youtube Search
 - Delay/Buffer Timeout is max 3 seconds on tracks and 7 sec for Playlists
 - Customisable Extractors
@@ -39,7 +39,7 @@ import { Extractor } from 'video-extractor' //for ES6
 var Data = await Extractor(Url || Query)
 ```
 
-## Strucutre of Data/Track
+## Structure of Data/Track
 
 ```
 Data : {
@@ -62,7 +62,8 @@ Data : {
       likes: 0,
       is_live: false,
       dislikes: 0,
-}]
+    }
+  ]
 }
 ```
 
