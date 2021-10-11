@@ -8,7 +8,7 @@
 
 ## About
 
-Video Extractor is a Extractor/Scrapper and Helps Players to fetch data from youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
+Video Extractor is a Extractor/Scrapper and Helps Players to fetch data from custom-youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
 
 - Object-oriented , means Value returned in a structure format
 - Python Based Browser Extrator -> Need to have Python installed in binary $PATH
@@ -36,13 +36,13 @@ const { Extractor } = require('video-extractor') //For CommonJS
 import { Extractor } from 'video-extractor' //for ES6
 
 
-var Tracks = await Extractor(Url || Query)
+var Data = await Extractor(Url || Query)
 ```
 
-## Strucutre of Tracks
+## Strucutre of Data/Track
 
 ```
-Tracks : {
+Data : {
   playlist : Boolean,
   tracks : [
     {
@@ -66,8 +66,8 @@ Tracks : {
 }
 ```
 
-- `Tracks.tracks[0].stream_url can be used in terms of stream value in @discordjs/voice or any other Audio package .`
-- `Object can be seen null or undefined based on platform , like channelId and channel_url isn't present for spotify and soundcloud , But most usable stuff will be there for all shorts of Videos`
+- `Data.tracks[0].stream_url can be used in terms of stream value in @discordjs/voice or any other Audio package .`
+- `Object can be seen null or undefined based on platform , like channelId and channel_url isn't present for facebook and soundcloud , But most usable stuff will be there for all shorts of Videos`
 
 ## Links
 
