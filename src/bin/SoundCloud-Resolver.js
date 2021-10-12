@@ -29,8 +29,9 @@ async function SoundCloudExtractor(Query, RegexValue) {
 
   async function SoundCloundTrackModel(SoundCloudRawTrack) {
     const track = {
-      Id: SoundCloudRawTrack.id,
+      Id: SoundCloudRawTrack.id ?? null,
       url: SoundCloudRawTrack.url ?? null,
+      video_Id: SoundCloudRawTrack.id ?? null,
       title: SoundCloudRawTrack.title ?? null,
       author: SoundCloudRawTrack.author.name ?? null,
       author_link: SoundCloudRawTrack.author.url ?? null,

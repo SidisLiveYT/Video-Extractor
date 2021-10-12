@@ -1,6 +1,7 @@
 export type YoutubeDLTrack = {
   Id: 0
   url: String
+  video_Id: String
   title: String
   author: String
   author_link: String
@@ -18,6 +19,6 @@ export type YoutubeDLTrack = {
 }
 
 export type YoutubeDLData = {
-  playlist : Boolean,
-  tracks : Array<YoutubeDLTrack>
+  playlist: Boolean
+  tracks: Array<YoutubeDLTrack>
 }

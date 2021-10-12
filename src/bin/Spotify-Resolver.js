@@ -12,7 +12,9 @@ async function SpotifyScrapper(Url) {
   }
 
   const ProcessedTracks = await Promise.all(
-    SpotifyTracksRawData.tracks.items.map(async (Track) => await SpotifyTrackExtractor(Track)),
+    SpotifyTracksRawData.tracks.items.map(
+      async (Track) => await SpotifyTrackExtractor(Track),
+    ),
   );
 
   return {
@@ -33,6 +35,10 @@ async function SpotifyScrapper(Url) {
           ? SpotifyTrackRawData.external_urls.spotify
           : SpotifyTrackRawData.track.external_urls.spotify)
         ?? VideoThumbnailPreview.link
+        ?? null,
+      video_Id:
+        (SpotifyTrackRawData.track ? SpotifyTrackRawData.track.id : null)
+        ?? SpotifyTrackRawData.id
         ?? null,
       title:
         SpotifyTrackRawData.name
