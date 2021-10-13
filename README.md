@@ -23,7 +23,7 @@ Video Extractor is a Extractor/Scrapper and Helps Players to fetch data from cus
 **Node.js 16 or newer is required.**
 
 ```
-npm install video-extractor
+npm install video-extractor@latest
 ```
 
 ## Example usage
@@ -36,7 +36,7 @@ const { Extractor } = require('video-extractor') //For CommonJS
 import { Extractor } from 'video-extractor' //for ES6
 
 
-var Data = await Extractor(Url || Query)
+var Data = await Extractor(Url || 'Despacito')
 ```
 
 ## Structure of Data/Track
@@ -57,7 +57,7 @@ Data : {
       duration: 0,
       preview_stream_url: String,
       stream: String
-      orignal_extractor: 'youtbe' | 'spotify' | 'facebook' | 'arbitary',
+      orignal_extractor: 'youtube' | 'spotify' | 'facebook' | 'arbitary',
       thumbnail: String,
       channelId: 0 || String,
       channel_url: String,
