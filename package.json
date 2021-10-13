@@ -55,7 +55,7 @@
   "dependencies": {
     "@sidislive/youtube-dl-exec": "^1.0.0",
     "is-url": "^1.2.4",
-    "play-dl": "^1.1.0",
+    "play-dl": "^1.1.5",
     "soundcloud-scraper": "^5.0.2",
     "spotify-url-info": "^2.2.3"
   },

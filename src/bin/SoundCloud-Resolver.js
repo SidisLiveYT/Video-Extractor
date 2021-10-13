@@ -50,7 +50,7 @@ async function SoundCloudExtractor(Query, RegexValue) {
       is_live: false,
       dislikes: null,
     };
-    const CompleteTracks = await YoutubeDLExtractor(
+    const CompleteTracks = await YoutubeDLExtractor.YoutubeDLExtraction(
       track.title,
       'souncloud',
       track,

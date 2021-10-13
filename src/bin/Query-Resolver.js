@@ -17,7 +17,7 @@ async function QueryResolver(Query) {
       && (ValidateUrlResult.includes('playlist')
         || ValidateUrlResult.includes('album'))
         ? await YoutubePlaylistResolver(Query)
-        : [await YoutubeDLExtractor(Query)],
+        : [await YoutubeDLExtractor.YoutubeDLExtraction(Query)],
   };
   return YoutubeDLTracks;
 }

@@ -55,7 +55,8 @@ Data : {
       description: String,
       custom_extractor: `youtube-dl`,
       duration: 0,
-      stream_url: String,
+      preview_stream_url: String,
+      stream: String
       orignal_extractor: 'youtbe' | 'spotify' | 'facebook' | 'arbitary',
       thumbnail: String,
       channelId: 0 || String,
@@ -68,7 +69,7 @@ Data : {
 }
 ```
 
-- `Data.tracks[0].stream_url can be used in terms of stream value in @discordjs/voice or any other Audio package .`
+- `Data.tracks[0].stream can be used in terms of stream value in @discordjs/voice or any other Audio package .`
 - `Object can be seen null or undefined based on platform , like channelId and channel_url isn't present for facebook and soundcloud , But most usable stuff will be there for all shorts of Videos`
 
 ## Links

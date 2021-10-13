@@ -80,7 +80,7 @@ async function SpotifyScrapper(Url) {
       is_live: false,
       dislikes: null,
     };
-    const CompleteTracks = await YoutubeDLExtractor(
+    const CompleteTracks = await YoutubeDLExtractor.YoutubeDLExtraction(
       track.title,
       'spotify',
       track,
