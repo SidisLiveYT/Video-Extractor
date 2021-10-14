@@ -110,10 +110,10 @@ class YoutubeDLExtractor {
     const track = {
       Id: 0,
       url:
-        ExtraValue.url
+        (ExtraValue.url
         ?? YoutubeDLRawData.video_url
         ?? (YoutubeDLRawData.webpage_url
-        && !YoutubeDLRawData.extractor.includes('youtube:search')
+          && !YoutubeDLRawData.extractor.includes('youtube:search'))
           ? YoutubeDLRawData.webpage_url
           : null)
         ?? (YoutubeDLRawData.entries
@@ -124,10 +124,10 @@ class YoutubeDLExtractor {
           : null)
         ?? null,
       video_Id:
-        ExtraValue.video_Id
+        (ExtraValue.video_Id
         ?? YoutubeDLRawData.display_id
         ?? (YoutubeDLRawData.display_id
-        && !YoutubeDLRawData.extractor.includes('youtube:search')
+          && !YoutubeDLRawData.extractor.includes('youtube:search'))
           ? YoutubeDLRawData.display_id
           : null)
         ?? (YoutubeDLRawData.entries
@@ -138,10 +138,10 @@ class YoutubeDLExtractor {
           : null)
         ?? null,
       title:
-        ExtraValue.title
+        (ExtraValue.title
         ?? YoutubeDLRawData.track
         ?? YoutubeDLRawData.title
-        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0])
           ? YoutubeDLRawData.entries[0].title
           : null)
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
