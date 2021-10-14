@@ -1,6 +1,3 @@
-const SoundCloud = require('soundcloud-scraper');
-
-const SoundCloudClient = new SoundCloud.Client();
 const YoutubeDLExtractor = require('./Track-Extractor');
 
 async function SoundCloudExtractor(Query, RegexValue) {
@@ -21,42 +18,14 @@ async function SoundCloudExtractor(Query, RegexValue) {
       tracks: YoutubeDLTracks,
     };
   }
-  const SoundCloudRawTrack = await SoundCloudClient.getSongInfo(Query);
+  const SoundCloudRawTrack = await YoutubeDLExtractor.YoutubeDLExtraction(
+    Query,
+    'souncloud',
+  );
   return {
     playlist: false,
-    tracks: [await SoundCloundTrackModel(SoundCloudRawTrack)],
+    tracks: [SoundCloudRawTrack],
   };
-
-  async function SoundCloundTrackModel(SoundCloudRawTrack) {
-    const track = {
-      Id: SoundCloudRawTrack.id ?? null,
-      url: SoundCloudRawTrack.url ?? null,
-      video_Id: SoundCloudRawTrack.id ?? null,
-      title: SoundCloudRawTrack.title ?? null,
-      author: SoundCloudRawTrack.author.name ?? null,
-      author_link: SoundCloudRawTrack.author.url ?? null,
-      description: SoundCloudRawTrack.description ?? null,
-      custom_extractor: 'youtube-dl -> soundcloud',
-      duration: SoundCloudRawTrack.duration ?? null,
-      stream_url:
-        SoundCloudRawTrack.streamURL && SoundCloudRawTrack.streamURL !== 'null'
-          ? SoundCloudRawTrack.streamURL
-          : null ?? null,
-      orignal_extractor: 'soundcloud',
-      thumbnail: SoundCloudRawTrack.thumbnail ?? null,
-      channelId: null,
-      channel_url: null,
-      likes: SoundCloudRawTrack.likes ?? null,
-      is_live: false,
-      dislikes: null,
-    };
-    const CompleteTracks = await YoutubeDLExtractor.YoutubeDLExtraction(
-      track.title,
-      'souncloud',
-      track,
-    );
-    return CompleteTracks;
-  }
 }
 
 module.exports = SoundCloudExtractor;

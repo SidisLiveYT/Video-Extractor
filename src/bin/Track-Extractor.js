@@ -28,7 +28,7 @@ class YoutubeDLExtractor {
         },
       );
       if (!SpecialPlaylistRequest) {
-        return YoutubeDLExtractor.#YoutubeDLTrackModel(
+        return await YoutubeDLExtractor.#YoutubeDLTrackModel(
           YoutubeDLRawDatas[0] ?? YoutubeDLRawDatas,
           extractor,
           ExtraValue,
@@ -36,7 +36,12 @@ class YoutubeDLExtractor {
       }
       const ProcessedYoutubeDLTrack = YoutubeDLRawDatas && YoutubeDLRawDatas.entries
         ? await Promise.all(
-          await YoutubeDLRawDatas.entries.map((Track) => YoutubeDLExtractor.#YoutubeDLTrackModel(Track, extractor)),
+          await YoutubeDLRawDatas.entries.map(
+            async (Track) => await YoutubeDLExtractor.#YoutubeDLTrackModel(
+              Track,
+              extractor,
+            ),
+          ),
         )
         : [];
       return ProcessedYoutubeDLTrack;

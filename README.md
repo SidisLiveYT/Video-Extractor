@@ -10,6 +10,7 @@
 
 Video Extractor is a Extractor/Scrapper and Helps Players to fetch data from custom-youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
 
+- Even Supports Youtube Live Streams to Stream on your Web Application(discord bots , html player and e.t.c)
 - Object-oriented , means Value returned in a structure format
 - Python Based Browser Extrator -> Need to have Python installed in binary \$PATH
 - Supports 700+ Website's Urls and Even Youtube Search
