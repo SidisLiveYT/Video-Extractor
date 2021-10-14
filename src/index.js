@@ -10,7 +10,7 @@ const YoutubeDLData = require('../typings/instances-commonjs');
  */
 
 async function Extractor(Query = null) {
-  if (!Query) throw TypeError('Invalid Url or Query Detected for Extractor');
+  if (!Query || (Query && typeof Query !== 'string')) throw TypeError('Query is invalid or is not String');
   const SpotifyUrlRegex = /^(?:spotify:|(?:https?:\/\/(?:open|play)\.spotify\.com\/))(?:embed)?\/?(album|track|playlist)(?::|\/)((?:[0-9a-zA-Z]){22})/;
   const SoundCloundUrlRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc)\/(.*)$/;
   if (Query.match(SpotifyUrlRegex)) return await SpotifyExtractor(Query);
