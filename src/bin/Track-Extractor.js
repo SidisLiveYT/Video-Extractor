@@ -255,7 +255,7 @@ class YoutubeDLExtractor {
           ?? null,
       stream_type: YoutubeSourceStreamData
         ? YoutubeSourceStreamData.type
-        : 'webm/opus' ?? 'webm/opus',
+        : undefined ?? undefined,
       orignal_extractor:
         extractor
         ?? YoutubeDLRawData.extractor
