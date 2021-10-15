@@ -110,17 +110,17 @@ class YoutubeDLExtractor {
     const track = {
       Id: 0,
       url:
-        (ExtraValue.url
-        ?? YoutubeDLRawData.video_url
-        ?? (YoutubeDLRawData.webpage_url
-          && !YoutubeDLRawData.extractor.includes('youtube:search'))
-          ? YoutubeDLRawData.webpage_url
+        ExtraValue.url
+        ?? (!YoutubeDLRawData.extractor.includes('youtube:search')
+          ? YoutubeDLRawData.video_url ?? YoutubeDLRawData.webpage_url ?? null
           : null)
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
         && YoutubeDLRawData.entries[0].webpage_url
         && !YoutubeDLRawData.entries[0].extractor.includes('youtube:search')
-          ? YoutubeDLRawData.entries[0].webpage_url
+          ? YoutubeDLRawData.entries[0].video_url
+            ?? YoutubeDLRawData.entries[0].webpage_url
+            ?? null
           : null)
         ?? null,
       video_Id:
@@ -215,18 +215,19 @@ class YoutubeDLExtractor {
         ? YoutubeSourceStreamData.stream
         : null
           ?? YoutubeDLExtractor.#streamextractor(
-            YoutubeDLRawData.video_url
-              ?? (YoutubeDLRawData.webpage_url
-              && YoutubeDLRawData.extractor
-              && !YoutubeDLRawData.extractor.includes('youtube:search')
-                ? YoutubeDLRawData.webpage_url
+            ExtraValue.url
+              ?? (!YoutubeDLRawData.extractor.includes('youtube:search')
+                ? YoutubeDLRawData.video_url
+                  ?? YoutubeDLRawData.webpage_url
+                  ?? null
                 : null)
               ?? (YoutubeDLRawData.entries
               && YoutubeDLRawData.entries[0]
               && YoutubeDLRawData.entries[0].webpage_url
-              && YoutubeDLRawData.entries[0].extractor
               && !YoutubeDLRawData.entries[0].extractor.includes('youtube:search')
-                ? YoutubeDLRawData.entries[0].webpage_url
+                ? YoutubeDLRawData.entries[0].video_url
+                  ?? YoutubeDLRawData.entries[0].webpage_url
+                  ?? null
                 : null)
               ?? null,
           )
@@ -254,7 +255,7 @@ class YoutubeDLExtractor {
           ?? null,
       stream_type: YoutubeSourceStreamData
         ? YoutubeSourceStreamData.type
-        : undefined ?? undefined,
+        : 'webm/opus' ?? 'webm/opus',
       orignal_extractor:
         extractor
         ?? YoutubeDLRawData.extractor
