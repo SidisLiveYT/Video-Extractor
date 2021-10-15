@@ -33,8 +33,10 @@ async function SpotifyScrapper(Url) {
       url:
         (SpotifyTrackRawData.external_urls
           ? SpotifyTrackRawData.external_urls.spotify
-          : SpotifyTrackRawData.track.external_urls.spotify)
-        ?? VideoThumbnailPreview.link
+            ?? SpotifyTrackRawData.track.external_urls.spotify
+            ?? null
+          : null)
+        ?? (VideoThumbnailPreview ? VideoThumbnailPreview.link : null)
         ?? null,
       video_Id:
         (SpotifyTrackRawData.track ? SpotifyTrackRawData.track.id : null)
