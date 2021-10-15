@@ -10,7 +10,7 @@ var YoutubeDLTrack = {
   preview_stream_url: null,
   stream: null,
   stream_type: undefined,
-  orignal_extractor: null | 'youtube' | 'spotify' | 'facebook' | 'arbitary',
+  orignal_extractor: null | 'youtube' | 'spotify' | 'facebook' | 'arbitrary',
   thumbnail: null,
   channelId: 'none' | 0,
   channel_url: null,

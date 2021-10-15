@@ -59,7 +59,7 @@ Data : {
       preview_stream_url: String,
       stream: String,
       stream_type: String,
-      orignal_extractor: 'youtube' | 'spotify' | 'facebook' | 'arbitary',
+      orignal_extractor: 'youtube' | 'spotify' | 'facebook' | 'arbitrary',
       thumbnail: String,
       channelId: 0 || String,
       channel_url: String,

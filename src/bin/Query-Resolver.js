@@ -6,18 +6,22 @@ async function QueryResolver(Query) {
   const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/;
   const ValidateUrlResult = await validate(Query);
   const YoutubeDLTracks = {
-    playlist:
-      !ValidateUrlResult
-      ?? ValidateUrlResult.includes('playlist')
-      ?? ValidateUrlResult.includes('album')
-      ?? false,
+    playlist: ValidateUrlResult
+      ? ValidateUrlResult.includes('playlist')
+        ?? ValidateUrlResult.includes('album')
+        ?? null
+      : false,
     tracks:
-      Query.match(YoutubeUrlRegex)
+      (Query.match(YoutubeUrlRegex)
       && ValidateUrlResult
       && (ValidateUrlResult.includes('playlist')
         || ValidateUrlResult.includes('album'))
         ? await YoutubePlaylistResolver(Query)
-        : [await YoutubeDLExtractor.YoutubeDLExtraction(Query, 'youtube')],
+        : null)
+      ?? (ValidateUrlResult
+      && (ValidateUrlResult.includes('search') || Query.match(YoutubeUrlRegex))
+        ? [await YoutubeDLExtractor.YoutubeDLExtraction(Query, 'youtube')]
+        : [await YoutubeDLExtractor.YoutubeDLExtraction(Query)]),
   };
   return YoutubeDLTracks;
 }

@@ -95,13 +95,13 @@ class YoutubeDLExtractor {
       ? await YoutubeDLExtractor.#YoutubeStreamDownload(
         YoutubeDLRawData.video_url
               ?? (YoutubeDLRawData.webpage_url
-              && !YoutubeDLRawData.extractor.includes('youtube:search')
+              && !YoutubeDLRawData.extractor.includes('search')
                 ? YoutubeDLRawData.webpage_url
                 : null)
               ?? (YoutubeDLRawData.entries
               && YoutubeDLRawData.entries[0]
               && YoutubeDLRawData.entries[0].webpage_url
-              && !YoutubeDLRawData.entries[0].extractor.includes('youtube:search')
+              && !YoutubeDLRawData.entries[0].extractor.includes('search')
                 ? YoutubeDLRawData.entries[0].webpage_url
                 : null)
               ?? null,
@@ -111,13 +111,13 @@ class YoutubeDLExtractor {
       Id: 0,
       url:
         ExtraValue.url
-        ?? (!YoutubeDLRawData.extractor.includes('youtube:search')
+        ?? (!YoutubeDLRawData.extractor.includes('search')
           ? YoutubeDLRawData.video_url ?? YoutubeDLRawData.webpage_url ?? null
           : null)
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
         && YoutubeDLRawData.entries[0].webpage_url
-        && !YoutubeDLRawData.entries[0].extractor.includes('youtube:search')
+        && !YoutubeDLRawData.entries[0].extractor.includes('search')
           ? YoutubeDLRawData.entries[0].video_url
             ?? YoutubeDLRawData.entries[0].webpage_url
             ?? null
@@ -127,21 +127,21 @@ class YoutubeDLExtractor {
         (ExtraValue.video_Id
         ?? YoutubeDLRawData.display_id
         ?? (YoutubeDLRawData.display_id
-          && !YoutubeDLRawData.extractor.includes('youtube:search'))
+          && !YoutubeDLRawData.extractor.includes('search'))
           ? YoutubeDLRawData.display_id
           : null)
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
         && YoutubeDLRawData.entries[0].display_id
-        && !YoutubeDLRawData.entries[0].extractor.includes('youtube:search')
+        && !YoutubeDLRawData.entries[0].extractor.includes('search')
           ? YoutubeDLRawData.entries[0].display_id
           : null)
         ?? null,
       title:
-        (ExtraValue.title
+        ExtraValue.title
         ?? YoutubeDLRawData.track
         ?? YoutubeDLRawData.title
-        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0])
+        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].title
           : null)
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
@@ -216,7 +216,7 @@ class YoutubeDLExtractor {
         : null
           ?? YoutubeDLExtractor.#streamextractor(
             ExtraValue.url
-              ?? (!YoutubeDLRawData.extractor.includes('youtube:search')
+              ?? (!YoutubeDLRawData.extractor.includes('search')
                 ? YoutubeDLRawData.video_url
                   ?? YoutubeDLRawData.webpage_url
                   ?? null
@@ -224,7 +224,7 @@ class YoutubeDLExtractor {
               ?? (YoutubeDLRawData.entries
               && YoutubeDLRawData.entries[0]
               && YoutubeDLRawData.entries[0].webpage_url
-              && !YoutubeDLRawData.entries[0].extractor.includes('youtube:search')
+              && !YoutubeDLRawData.entries[0].extractor.includes('search')
                 ? YoutubeDLRawData.entries[0].video_url
                   ?? YoutubeDLRawData.entries[0].webpage_url
                   ?? null
@@ -232,7 +232,6 @@ class YoutubeDLExtractor {
               ?? null,
           )
           ?? ExtraValue.stream_url
-          ?? YoutubeDLRawData.url
           ?? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
             ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format.includes('audio')).url
             : null)
@@ -266,7 +265,7 @@ class YoutubeDLExtractor {
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].extractor_key
           : null)
-        ?? 'arbitary',
+        ?? 'arbitrary',
       thumbnail:
         ExtraValue.thumbnail
         ?? (YoutubeDLRawData.thumbnail && YoutubeDLRawData.thumbnail[0]

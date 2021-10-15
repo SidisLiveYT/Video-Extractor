@@ -11,7 +11,7 @@ export type YoutubeDLTrack = {
   preview_stream_url: String
   stream: String
   stream_type: String,
-  orignal_extractor: String | 'youtube' | 'spotify' | 'facebook' | 'arbitary'
+  orignal_extractor: String | 'youtube' | 'spotify' | 'facebook' | 'arbitrary'
   thumbnail: String
   channelId: String | Number
   channel_url: String
