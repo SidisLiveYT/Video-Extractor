@@ -82,12 +82,12 @@ async function SpotifyScrapper(Url) {
       is_live: false,
       dislikes: null,
     };
-    const CompleteTracks = await YoutubeDLExtractor.YoutubeDLExtraction(
+    const ProcessedTracks = await YoutubeDLExtractor.YoutubeDLExtraction(
       track.title,
       'spotify',
       track,
     );
-    return CompleteTracks;
+    return ProcessedTracks;
   }
 }
 module.exports = SpotifyScrapper;
