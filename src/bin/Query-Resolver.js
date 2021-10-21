@@ -2,7 +2,7 @@ const { validate } = require('play-dl');
 const YoutubeDLExtractor = require('./Track-Extractor');
 const YoutubePlaylistResolver = require('./YT-Playlist-Resolver');
 
-async function QueryResolver(Query) {
+async function QueryResolver(Query, StreamValueRecordBoolean = null) {
   const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/;
   const ValidateUrlResult = await validate(Query);
   const YoutubeDLTracks = {
@@ -16,12 +16,28 @@ async function QueryResolver(Query) {
       && ValidateUrlResult
       && (ValidateUrlResult.includes('playlist')
         || ValidateUrlResult.includes('album'))
-        ? await YoutubePlaylistResolver(Query)
+        ? await YoutubePlaylistResolver(Query, StreamValueRecordBoolean)
         : null)
       ?? (ValidateUrlResult
       && (ValidateUrlResult.includes('search') || Query.match(YoutubeUrlRegex))
-        ? [await YoutubeDLExtractor.YoutubeDLExtraction(Query, 'youtube')]
-        : [await YoutubeDLExtractor.YoutubeDLExtraction(Query)]),
+        ? [
+          await YoutubeDLExtractor.YoutubeDLExtraction(
+            Query,
+            'youtube',
+            null,
+            null,
+            StreamValueRecordBoolean,
+          ),
+        ]
+        : [
+          await YoutubeDLExtractor.YoutubeDLExtraction(
+            Query,
+            null,
+            null,
+            null,
+            StreamValueRecordBoolean,
+          ),
+        ]),
   };
   return YoutubeDLTracks;
 }

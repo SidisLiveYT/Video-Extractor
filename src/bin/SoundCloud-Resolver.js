@@ -1,6 +1,10 @@
 const YoutubeDLExtractor = require('./Track-Extractor');
 
-async function SoundCloudExtractor(Query, RegexValue) {
+async function SoundCloudExtractor(
+  Query,
+  RegexValue,
+  StreamValueRecordBoolean = null,
+) {
   if (
     (RegexValue[3] && RegexValue[3].includes('/sets/'))
     || (RegexValue[2] && RegexValue[2].includes('/sets/'))
@@ -12,6 +16,7 @@ async function SoundCloudExtractor(Query, RegexValue) {
       'soundcloud',
       null,
       true,
+      StreamValueRecordBoolean,
     );
     return {
       playlist: true,
@@ -21,6 +26,9 @@ async function SoundCloudExtractor(Query, RegexValue) {
   const SoundCloudRawTrack = await YoutubeDLExtractor.YoutubeDLExtraction(
     Query,
     'souncloud',
+    null,
+    null,
+    StreamValueRecordBoolean,
   );
   return {
     playlist: false,

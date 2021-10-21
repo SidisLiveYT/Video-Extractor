@@ -8,6 +8,7 @@ class YoutubeDLExtractor {
     extractor = false,
     ExtraValue = {},
     SpecialPlaylistRequest = false,
+    StreamValueRecordBoolean = null,
   ) {
     try {
       Query = !isUrl(Query) ? `ytsearch:${Query}` : Query;
@@ -32,6 +33,7 @@ class YoutubeDLExtractor {
           YoutubeDLRawDatas[0] ?? YoutubeDLRawDatas,
           extractor,
           ExtraValue,
+          StreamValueRecordBoolean,
         );
       }
       const ProcessedYoutubeDLTrack = YoutubeDLRawDatas && YoutubeDLRawDatas.entries
@@ -40,6 +42,8 @@ class YoutubeDLExtractor {
             async (Track) => await YoutubeDLExtractor.#YoutubeDLTrackModel(
               Track,
               extractor,
+              null,
+              StreamValueRecordBoolean,
             ),
           ),
         )
@@ -87,6 +91,7 @@ class YoutubeDLExtractor {
     YoutubeDLRawData,
     extractor = false,
     ExtraValue = {},
+    StreamValueRecordBoolean = null,
   ) {
     const YoutubeSourceStreamData = YoutubeDLRawData.is_live
       || (YoutubeDLRawData.entries
@@ -214,23 +219,25 @@ class YoutubeDLExtractor {
       stream: YoutubeSourceStreamData
         ? YoutubeSourceStreamData.stream
         : null
-          ?? YoutubeDLExtractor.#streamextractor(
-            ExtraValue.url
-              ?? (!YoutubeDLRawData.extractor.includes('search')
-                ? YoutubeDLRawData.video_url
-                  ?? YoutubeDLRawData.webpage_url
-                  ?? null
-                : null)
-              ?? (YoutubeDLRawData.entries
-              && YoutubeDLRawData.entries[0]
-              && YoutubeDLRawData.entries[0].webpage_url
-              && !YoutubeDLRawData.entries[0].extractor.includes('search')
-                ? YoutubeDLRawData.entries[0].video_url
-                  ?? YoutubeDLRawData.entries[0].webpage_url
-                  ?? null
-                : null)
-              ?? null,
-          )
+          ?? (StreamValueRecordBoolean
+            ? YoutubeDLExtractor.#streamextractor(
+              ExtraValue.url
+                  ?? (!YoutubeDLRawData.extractor.includes('search')
+                    ? YoutubeDLRawData.video_url
+                      ?? YoutubeDLRawData.webpage_url
+                      ?? null
+                    : null)
+                  ?? (YoutubeDLRawData.entries
+                  && YoutubeDLRawData.entries[0]
+                  && YoutubeDLRawData.entries[0].webpage_url
+                  && !YoutubeDLRawData.entries[0].extractor.includes('search')
+                    ? YoutubeDLRawData.entries[0].video_url
+                      ?? YoutubeDLRawData.entries[0].webpage_url
+                      ?? null
+                    : null)
+                  ?? null,
+            )
+            : null)
           ?? ExtraValue.stream_url
           ?? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
             ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format.includes('audio')).url

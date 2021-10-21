@@ -8,7 +8,7 @@
 
 ## About
 
-Video Extractor is a Extractor/Scrapper and Helps Players to fetch data from custom-youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
+Video Extractor is a Extractor/Scrapper/Downloader and Helps Players to fetch data from custom-youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
 
 - Even Supports Youtube Live Streams to Stream on your Web Application(discord bots , html player and e.t.c)
 - Object-oriented , means Value returned in a structure format
@@ -32,12 +32,13 @@ npm install video-extractor@latest
 Extractor Video/Playlist/Album Data from any Platform :-
 
 ```
-const { Extractor } = require('video-extractor') //For CommonJS
+const { Extractor , StreamDownloader} = require('video-extractor') //For CommonJS
                             OR
-import { Extractor } from 'video-extractor' //for ES6
+import { Extractor, StreamDownloader } from 'video-extractor' //for ES6
 
 
 var Data = await Extractor(Url || 'Despacito')
+var StreamData = await StreamDownloader(Url || 'Despacito')
 ```
 
 ## Structure of Data/Track
@@ -58,7 +59,7 @@ Data : {
       duration: 0,
       preview_stream_url: String,
       stream: String,
-      stream_type: String,
+      stream_type: String,  //if you use StreamDownloader()
       orignal_extractor: 'youtube' | 'spotify' | 'facebook' | 'arbitrary',
       thumbnail: String,
       channelId: 0 || String,

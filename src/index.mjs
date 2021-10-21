@@ -1,4 +1,5 @@
 import YoutubeDLDownloader from './index.js'
 
-export default YoutubeDLDownloader.Extractor
+export default YoutubeDLDownloader
+export const StreamDownloader = YoutubeDLDownloader.StreamDownloader
 export const Extractor = YoutubeDLDownloader.Extractor

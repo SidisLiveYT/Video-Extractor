@@ -1,10 +1,13 @@
 const { getData, getPreview } = require('spotify-url-info');
 const YoutubeDLExtractor = require('./Track-Extractor');
 
-async function SpotifyScrapper(Url) {
+async function SpotifyScrapper(Url, StreamValueRecordBoolean = null) {
   const SpotifyTracksRawData = await getData(Url);
   if (SpotifyTracksRawData.type === 'track') {
-    const CacheTrack = await SpotifyTrackExtractor(SpotifyTracksRawData);
+    const CacheTrack = await SpotifyTrackExtractor(
+      SpotifyTracksRawData,
+      StreamValueRecordBoolean,
+    );
     return {
       playlist: false,
       tracks: [CacheTrack],
@@ -13,7 +16,7 @@ async function SpotifyScrapper(Url) {
 
   const ProcessedTracks = await Promise.all(
     SpotifyTracksRawData.tracks.items.map(
-      async (Track) => await SpotifyTrackExtractor(Track),
+      async (Track) => await SpotifyTrackExtractor(Track, StreamValueRecordBoolean),
     ),
   );
 
@@ -22,7 +25,10 @@ async function SpotifyScrapper(Url) {
     tracks: ProcessedTracks,
   };
 
-  async function SpotifyTrackExtractor(SpotifyTrackRawData) {
+  async function SpotifyTrackExtractor(
+    SpotifyTrackRawData,
+    StreamValueRecordBoolean,
+  ) {
     const VideoThumbnailPreview = await getPreview(
       SpotifyTrackRawData.external_urls
         ? SpotifyTrackRawData.external_urls.spotify
@@ -86,6 +92,8 @@ async function SpotifyScrapper(Url) {
       track.title,
       'spotify',
       track,
+      null,
+      StreamValueRecordBoolean,
     );
     return ProcessedTracks;
   }
