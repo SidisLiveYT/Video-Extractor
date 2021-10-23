@@ -1,7 +1,7 @@
 const { getData, getPreview } = require('spotify-url-info');
 const YoutubeDLExtractor = require('./Track-Extractor');
 
-async function SpotifyScrapper(Url, StreamValueRecordBoolean = null) {
+async function SpotifyScrapper(Url, StreamValueRecordBoolean = undefined) {
   const SpotifyTracksRawData = await getData(Url);
   if (SpotifyTracksRawData.type === 'track') {
     const CacheTrack = await SpotifyTrackExtractor(
@@ -40,19 +40,19 @@ async function SpotifyScrapper(Url, StreamValueRecordBoolean = null) {
         (SpotifyTrackRawData.external_urls
           ? SpotifyTrackRawData.external_urls.spotify
             ?? SpotifyTrackRawData.track.external_urls.spotify
-            ?? null
-          : null)
-        ?? (VideoThumbnailPreview ? VideoThumbnailPreview.link : null)
-        ?? null,
+            ?? undefined
+          : undefined)
+        ?? (VideoThumbnailPreview ? VideoThumbnailPreview.link : undefined)
+        ?? undefined,
       video_Id:
-        (SpotifyTrackRawData.track ? SpotifyTrackRawData.track.id : null)
+        (SpotifyTrackRawData.track ? SpotifyTrackRawData.track.id : undefined)
         ?? SpotifyTrackRawData.id
-        ?? null,
+        ?? undefined,
       title:
         SpotifyTrackRawData.name
-        ?? (SpotifyTrackRawData.track ? SpotifyTrackRawData.track.name : null)
+        ?? (SpotifyTrackRawData.track ? SpotifyTrackRawData.track.name : undefined)
         ?? VideoThumbnailPreview.title
-        ?? null,
+        ?? undefined,
       author:
         (SpotifyTrackRawData.artists && SpotifyTrackRawData.artists[0]
           ? SpotifyTrackRawData.artists[0].name
@@ -60,7 +60,7 @@ async function SpotifyScrapper(Url, StreamValueRecordBoolean = null) {
             && SpotifyTrackRawData.track.artists
             && SpotifyTrackRawData.track.artists[0]
             ? SpotifyTrackRawData.track.artists[0].name
-            : null) ?? null,
+            : undefined) ?? undefined,
       author_link:
         (SpotifyTrackRawData.artists && SpotifyTrackRawData.artists[0]
           ? SpotifyTrackRawData.artists[0].url
@@ -68,31 +68,31 @@ async function SpotifyScrapper(Url, StreamValueRecordBoolean = null) {
             && SpotifyTrackRawData.track.artists
             && SpotifyTrackRawData.track.artists[0]
             ? SpotifyTrackRawData.track.artists[0].url
-            : null) ?? null,
+            : undefined) ?? undefined,
       description:
         SpotifyTrackRawData.description
         ?? VideoThumbnailPreview.description
-        ?? null,
+        ?? undefined,
       custom_extractor: 'youtube-dl',
       duration:
         SpotifyTrackRawData.duration_ms
         ?? (SpotifyTrackRawData.track
           ? SpotifyTrackRawData.track.duration_ms
-          : null)
-        ?? null,
+          : undefined)
+        ?? undefined,
       orignal_extractor: 'spotify',
-      thumbnail: VideoThumbnailPreview.image ?? null,
-      channelId: null,
-      channel_url: null,
-      likes: null,
+      thumbnail: VideoThumbnailPreview.image ?? undefined,
+      channelId: undefined,
+      channel_url: undefined,
+      likes: undefined,
       is_live: false,
-      dislikes: null,
+      dislikes: undefined,
     };
     const ProcessedTracks = await YoutubeDLExtractor.YoutubeDLExtraction(
       track.title,
       'spotify',
       track,
-      null,
+      undefined,
       StreamValueRecordBoolean,
     );
     return ProcessedTracks;

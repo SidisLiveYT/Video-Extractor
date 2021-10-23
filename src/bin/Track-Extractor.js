@@ -8,7 +8,7 @@ class YoutubeDLExtractor {
     extractor = false,
     ExtraValue = {},
     SpecialPlaylistRequest = false,
-    StreamValueRecordBoolean = null,
+    StreamValueRecordBoolean = undefined,
   ) {
     try {
       Query = !isUrl(Query) ? `ytsearch:${Query}` : Query;
@@ -32,7 +32,7 @@ class YoutubeDLExtractor {
         return await YoutubeDLExtractor.#YoutubeDLTrackModel(
           YoutubeDLRawDatas[0] ?? YoutubeDLRawDatas,
           extractor,
-          ExtraValue,
+          ExtraValue ?? {},
           StreamValueRecordBoolean,
         );
       }
@@ -42,7 +42,7 @@ class YoutubeDLExtractor {
             async (Track) => await YoutubeDLExtractor.#YoutubeDLTrackModel(
               Track,
               extractor,
-              null,
+              undefined,
               StreamValueRecordBoolean,
             ),
           ),
@@ -50,7 +50,7 @@ class YoutubeDLExtractor {
         : [];
       return ProcessedYoutubeDLTrack;
     } catch (error) {
-      return void null;
+      return void undefined;
     }
   }
 
@@ -68,7 +68,7 @@ class YoutubeDLExtractor {
       },
     );
 
-    if (!YoutubeDLProcess.stdout) return void null;
+    if (!YoutubeDLProcess.stdout) return void undefined;
     const stream = YoutubeDLProcess.stdout;
 
     stream.on('error', () => {
@@ -80,8 +80,8 @@ class YoutubeDLExtractor {
 
   static async #YoutubeStreamDownload(Url) {
     const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/;
-    if (!Url) return null;
-    if (!Url.match(YoutubeUrlRegex)) return null;
+    if (!Url) return undefined;
+    if (!Url.match(YoutubeUrlRegex)) return undefined;
 
     const SourceStream = await stream(Url);
     return SourceStream;
@@ -91,7 +91,7 @@ class YoutubeDLExtractor {
     YoutubeDLRawData,
     extractor = false,
     ExtraValue = {},
-    StreamValueRecordBoolean = null,
+    StreamValueRecordBoolean = undefined,
   ) {
     const YoutubeSourceStreamData = StreamValueRecordBoolean
       ? YoutubeDLRawData.is_live
@@ -103,163 +103,163 @@ class YoutubeDLExtractor {
               ?? (YoutubeDLRawData.webpage_url
               && !YoutubeDLRawData.extractor.includes('search')
                 ? YoutubeDLRawData.webpage_url
-                : null)
+                : undefined)
               ?? (YoutubeDLRawData.entries
               && YoutubeDLRawData.entries[0]
               && YoutubeDLRawData.entries[0].webpage_url
               && !YoutubeDLRawData.entries[0].extractor.includes('search')
                 ? YoutubeDLRawData.entries[0].webpage_url
-                : null)
-              ?? null,
+                : undefined)
+              ?? undefined,
         )
-        : null
+        : undefined
       : undefined;
     const track = {
       Id: 0,
       url:
         ExtraValue.url
         ?? (!YoutubeDLRawData.extractor.includes('search')
-          ? YoutubeDLRawData.video_url ?? YoutubeDLRawData.webpage_url ?? null
-          : null)
+          ? YoutubeDLRawData.video_url ?? YoutubeDLRawData.webpage_url ?? undefined
+          : undefined)
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
         && YoutubeDLRawData.entries[0].webpage_url
         && !YoutubeDLRawData.entries[0].extractor.includes('search')
           ? YoutubeDLRawData.entries[0].video_url
             ?? YoutubeDLRawData.entries[0].webpage_url
-            ?? null
-          : null)
-        ?? null,
+            ?? undefined
+          : undefined)
+        ?? undefined,
       video_Id:
         (ExtraValue.video_Id
         ?? YoutubeDLRawData.display_id
         ?? (YoutubeDLRawData.display_id
           && !YoutubeDLRawData.extractor.includes('search'))
           ? YoutubeDLRawData.display_id
-          : null)
+          : undefined)
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
         && YoutubeDLRawData.entries[0].display_id
         && !YoutubeDLRawData.entries[0].extractor.includes('search')
           ? YoutubeDLRawData.entries[0].display_id
-          : null)
-        ?? null,
+          : undefined)
+        ?? undefined,
       title:
         ExtraValue.title
         ?? YoutubeDLRawData.track
         ?? YoutubeDLRawData.title
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].title
-          : null)
+          : undefined)
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].track
-          : null)
-        ?? null,
+          : undefined)
+        ?? undefined,
       author:
         ExtraValue.author
         ?? YoutubeDLRawData.uploader
         ?? YoutubeDLRawData.channel
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].uploader
-          : null)
+          : undefined)
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].channel
-          : null)
-        ?? null,
+          : undefined)
+        ?? undefined,
       author_link:
         ExtraValue.author_link
         ?? YoutubeDLRawData.uploader_url
         ?? YoutubeDLRawData.channel_url
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].author_link
-          : null)
+          : undefined)
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].uploader_url
-          : null)
+          : undefined)
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].channel_url
-          : null)
-        ?? null,
+          : undefined)
+        ?? undefined,
       description:
         ExtraValue.description
         ?? YoutubeDLRawData.description
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].description
-          : null)
-        ?? null,
+          : undefined)
+        ?? undefined,
       custom_extractor: 'youtube-dl',
       duration:
         ExtraValue.duration
         ?? YoutubeDLRawData.duration
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].duration
-          : null)
+          : undefined)
         ?? 0,
       preview_stream_url:
         ExtraValue.stream_url
         ?? YoutubeDLRawData.url
         ?? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
           ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format.includes('audio')).url
-          : null)
+          : undefined)
         ?? (YoutubeDLRawData.requested_formats
         && YoutubeDLRawData.requested_formats[0]
           ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
-          : null)
+          : undefined)
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
         && YoutubeDLRawData.entries[0].formats
         && YoutubeDLRawData.entries[0].requested_formats[0]
           ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format.includes('audio')).url
-          : null)
+          : undefined)
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
         && YoutubeDLRawData.entries[0].requested_formats
         && YoutubeDLRawData.entries[0].requested_formats[0]
           ? YoutubeDLRawData.entries[0].requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
-          : null)
-        ?? null,
+          : undefined)
+        ?? undefined,
       stream: StreamValueRecordBoolean
         ? YoutubeSourceStreamData
           ? YoutubeSourceStreamData.stream
-          : null
+          : undefined
             ?? YoutubeDLExtractor.#streamextractor(
               ExtraValue.url
                 ?? (!YoutubeDLRawData.extractor.includes('search')
                   ? YoutubeDLRawData.video_url
                     ?? YoutubeDLRawData.webpage_url
-                    ?? null
-                  : null)
+                    ?? undefined
+                  : undefined)
                 ?? (YoutubeDLRawData.entries
                 && YoutubeDLRawData.entries[0]
                 && YoutubeDLRawData.entries[0].webpage_url
                 && !YoutubeDLRawData.entries[0].extractor.includes('search')
                   ? YoutubeDLRawData.entries[0].video_url
                     ?? YoutubeDLRawData.entries[0].webpage_url
-                    ?? null
-                  : null)
-                ?? null,
+                    ?? undefined
+                  : undefined)
+                ?? undefined,
             )
             ?? ExtraValue.stream_url
             ?? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
               ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format.includes('audio')).url
-              : null)
+              : undefined)
             ?? (YoutubeDLRawData.requested_formats
             && YoutubeDLRawData.requested_formats[0]
               ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
-              : null)
+              : undefined)
             ?? (YoutubeDLRawData.entries
             && YoutubeDLRawData.entries[0]
             && YoutubeDLRawData.entries[0].formats
             && YoutubeDLRawData.entries[0].requested_formats[0]
               ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format.includes('audio')).url
-              : null)
+              : undefined)
             ?? (YoutubeDLRawData.entries
             && YoutubeDLRawData.entries[0]
             && YoutubeDLRawData.entries[0].requested_formats
             && YoutubeDLRawData.entries[0].requested_formats[0]
               ? YoutubeDLRawData.entries[0].requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
-              : null)
-            ?? null
+              : undefined)
+            ?? undefined
         : undefined,
       stream_type: StreamValueRecordBoolean
         ? YoutubeSourceStreamData
@@ -272,59 +272,59 @@ class YoutubeDLExtractor {
         ?? YoutubeDLRawData.extractor_key
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].extractor
-          : null)
+          : undefined)
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].extractor_key
-          : null)
+          : undefined)
         ?? 'arbitrary',
       thumbnail:
         ExtraValue.thumbnail
         ?? (YoutubeDLRawData.thumbnail && YoutubeDLRawData.thumbnail[0]
           ? YoutubeDLRawData.thumbnail[0].url
-          : null)
+          : undefined)
         ?? YoutubeDLRawData.thumbnail
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
         && YoutubeDLRawData.entries[0].thumbnail
         && YoutubeDLRawData.entries[0].thumbnail[0]
           ? YoutubeDLRawData.entries[0].thumbnail[0].url
-          : null)
+          : undefined)
         ?? YoutubeDLRawData.entries[0].thumbnail
-        ?? null,
+        ?? undefined,
       channelId:
         ExtraValue.channelId
         ?? YoutubeDLRawData.channel_id
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].channel_id
-          : null)
-        ?? null,
+          : undefined)
+        ?? undefined,
       channel_url:
         ExtraValue.channel_url
         ?? YoutubeDLRawData.channel_url
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].channel_url
-          : null)
-        ?? null,
+          : undefined)
+        ?? undefined,
       likes:
         ExtraValue.likes
         ?? YoutubeDLRawData.like_count
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].like_count
-          : null)
+          : undefined)
         ?? 0,
       is_live:
         ExtraValue.is_live
         ?? YoutubeDLRawData.is_live
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].is_live
-          : null)
+          : undefined)
         ?? false,
       dislikes:
         ExtraValue.dislikes
         ?? YoutubeDLRawData.dislike_count
         ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
           ? YoutubeDLRawData.entries[0].dislike_count
-          : null)
+          : undefined)
         ?? 0,
     };
     return track;

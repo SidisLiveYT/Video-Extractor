@@ -9,7 +9,7 @@ const YoutubeDLData = require('../typings/instances-commonjs');
  * @returns {Promise<YoutubeDLData>} YoutubeDLData Array and Playlist boolean
  */
 
-async function Extractor(Query = null) {
+async function Extractor(Query = undefined) {
   if (!Query || (Query && typeof Query !== 'string')) throw TypeError('Query is invalid or is not String');
   const SpotifyUrlRegex = /^(?:spotify:|(?:https?:\/\/(?:open|play)\.spotify\.com\/))(?:embed)?\/?(album|track|playlist)(?::|\/)((?:[0-9a-zA-Z]){22})/;
   const SoundCloundUrlRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc)\/(.*)$/;
@@ -24,7 +24,7 @@ async function Extractor(Query = null) {
  * @returns {Promise<YoutubeDLData>} YoutubeDLData Array and Playlist boolean
  */
 
-async function StreamDownloader(Query = null) {
+async function StreamDownloader(Query = undefined) {
   if (!Query || (Query && typeof Query !== 'string')) throw TypeError('Query is invalid or is not String');
   const SpotifyUrlRegex = /^(?:spotify:|(?:https?:\/\/(?:open|play)\.spotify\.com\/))(?:embed)?\/?(album|track|playlist)(?::|\/)((?:[0-9a-zA-Z]){22})/;
   const SoundCloundUrlRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc)\/(.*)$/;

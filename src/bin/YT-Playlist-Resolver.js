@@ -1,7 +1,7 @@
 const { search } = require('play-dl');
 const YoutubeDLExtractor = require('./Track-Extractor');
 
-async function YoutubePlaylistResolver(Url, StreamValueRecordBoolean = null) {
+async function YoutubePlaylistResolver(Url, StreamValueRecordBoolean = undefined) {
   const PlaylistData = search(Url, {
     limit: 100,
     source: { yoututbe: 'playlist' },
@@ -10,8 +10,8 @@ async function YoutubePlaylistResolver(Url, StreamValueRecordBoolean = null) {
     async (Data) => await YoutubeDLExtractor.YoutubeDLExtraction(
       Data.url ?? Data.name ?? Data.title,
       'youtube',
-      null,
-      null,
+      undefined,
+      undefined,
       StreamValueRecordBoolean,
     ),
   );

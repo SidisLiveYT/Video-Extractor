@@ -73,7 +73,7 @@ Data : {
 ```
 
 - `Data.tracks[0].stream can be used in terms of stream value in @discordjs/voice or any other Audio package .`
-- `Object can be seen null or undefined based on platform , like channelId and channel_url isn't present for facebook and soundcloud , But most usable stuff will be there for all shorts of Videos`
+- `Object can be seen undefined or undefined based on platform , like channelId and channel_url isn't present for facebook and soundcloud , But most usable stuff will be there for all shorts of Videos`
 - `Video-Extractor Supports Live Streams of Youtubes and you can stream for your discord.js/voice Audio Resource stream value`
 
 ## Links

@@ -2,14 +2,14 @@ const { validate } = require('play-dl');
 const YoutubeDLExtractor = require('./Track-Extractor');
 const YoutubePlaylistResolver = require('./YT-Playlist-Resolver');
 
-async function QueryResolver(Query, StreamValueRecordBoolean = null) {
+async function QueryResolver(Query, StreamValueRecordBoolean = undefined) {
   const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/;
   const ValidateUrlResult = await validate(Query);
   const YoutubeDLTracks = {
     playlist: ValidateUrlResult
       ? ValidateUrlResult.includes('playlist')
         ?? ValidateUrlResult.includes('album')
-        ?? null
+        ?? undefined
       : false,
     tracks:
       (Query.match(YoutubeUrlRegex)
@@ -17,24 +17,24 @@ async function QueryResolver(Query, StreamValueRecordBoolean = null) {
       && (ValidateUrlResult.includes('playlist')
         || ValidateUrlResult.includes('album'))
         ? await YoutubePlaylistResolver(Query, StreamValueRecordBoolean)
-        : null)
+        : undefined)
       ?? (ValidateUrlResult
       && (ValidateUrlResult.includes('search') || Query.match(YoutubeUrlRegex))
         ? [
           await YoutubeDLExtractor.YoutubeDLExtraction(
             Query,
             'youtube',
-            null,
-            null,
+            undefined,
+            undefined,
             StreamValueRecordBoolean,
           ),
         ]
         : [
           await YoutubeDLExtractor.YoutubeDLExtraction(
             Query,
-            null,
-            null,
-            null,
+            undefined,
+            undefined,
+            undefined,
             StreamValueRecordBoolean,
           ),
         ]),
