@@ -89,7 +89,7 @@ async function SpotifyScrapper(Url, StreamValueRecordBoolean = undefined) {
       dislikes: undefined,
     };
     const ProcessedTracks = await YoutubeDLExtractor.YoutubeDLExtraction(
-      track.title,
+      `${track.title} ${track.author.slice(0, 10)}`,
       'spotify',
       track,
       undefined,
