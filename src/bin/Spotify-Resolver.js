@@ -21,7 +21,7 @@ async function SpotifyScrapper(Url, StreamValueRecordBoolean = undefined) {
   );
 
   return {
-    playlist: false,
+    playlist: !!ProcessedTracks[0],
     tracks: ProcessedTracks,
   };
 
@@ -45,12 +45,16 @@ async function SpotifyScrapper(Url, StreamValueRecordBoolean = undefined) {
         ?? (VideoThumbnailPreview ? VideoThumbnailPreview.link : undefined)
         ?? undefined,
       video_Id:
-        (SpotifyTrackRawData.track ? SpotifyTrackRawData.track.id : undefined)
+        (SpotifyTrackRawData.track
+          ? SpotifyTrackRawData.track.id
+          : undefined)
         ?? SpotifyTrackRawData.id
         ?? undefined,
       title:
         SpotifyTrackRawData.name
-        ?? (SpotifyTrackRawData.track ? SpotifyTrackRawData.track.name : undefined)
+        ?? (SpotifyTrackRawData.track
+          ? SpotifyTrackRawData.track.name
+          : undefined)
         ?? VideoThumbnailPreview.title
         ?? undefined,
       author:
