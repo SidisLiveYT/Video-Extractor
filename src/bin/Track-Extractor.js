@@ -119,7 +119,9 @@ class YoutubeDLExtractor {
       url:
         ExtraValue.url
         ?? (!YoutubeDLRawData.extractor.includes('search')
-          ? YoutubeDLRawData.video_url ?? YoutubeDLRawData.webpage_url ?? undefined
+          ? YoutubeDLRawData.video_url
+            ?? YoutubeDLRawData.webpage_url
+            ?? undefined
           : undefined)
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
@@ -140,8 +142,8 @@ class YoutubeDLExtractor {
         ?? (YoutubeDLRawData.entries
         && YoutubeDLRawData.entries[0]
         && YoutubeDLRawData.entries[0].display_id
-        && !YoutubeDLRawData.entries[0].extractor.includes('search')
           ? YoutubeDLRawData.entries[0].display_id
+            ?? YoutubeDLRawData.entries[0].id
           : undefined)
         ?? undefined,
       title:
@@ -219,47 +221,46 @@ class YoutubeDLExtractor {
           : undefined)
         ?? undefined,
       stream: StreamValueRecordBoolean
-        ? YoutubeSourceStreamData
+        ? (YoutubeSourceStreamData
           ? YoutubeSourceStreamData.stream
-          : undefined
-            ?? YoutubeDLExtractor.#streamextractor(
-              ExtraValue.url
-                ?? (!YoutubeDLRawData.extractor.includes('search')
-                  ? YoutubeDLRawData.video_url
-                    ?? YoutubeDLRawData.webpage_url
-                    ?? undefined
-                  : undefined)
-                ?? (YoutubeDLRawData.entries
-                && YoutubeDLRawData.entries[0]
-                && YoutubeDLRawData.entries[0].webpage_url
-                && !YoutubeDLRawData.entries[0].extractor.includes('search')
-                  ? YoutubeDLRawData.entries[0].video_url
-                    ?? YoutubeDLRawData.entries[0].webpage_url
-                    ?? undefined
-                  : undefined)
-                ?? undefined,
-            )
-            ?? ExtraValue.stream_url
-            ?? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
-              ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format.includes('audio')).url
-              : undefined)
-            ?? (YoutubeDLRawData.requested_formats
-            && YoutubeDLRawData.requested_formats[0]
-              ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
-              : undefined)
-            ?? (YoutubeDLRawData.entries
-            && YoutubeDLRawData.entries[0]
-            && YoutubeDLRawData.entries[0].formats
-            && YoutubeDLRawData.entries[0].requested_formats[0]
-              ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format.includes('audio')).url
-              : undefined)
-            ?? (YoutubeDLRawData.entries
-            && YoutubeDLRawData.entries[0]
-            && YoutubeDLRawData.entries[0].requested_formats
-            && YoutubeDLRawData.entries[0].requested_formats[0]
-              ? YoutubeDLRawData.entries[0].requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
-              : undefined)
-            ?? undefined
+          : undefined)
+          ?? YoutubeDLExtractor.#streamextractor(
+            !YoutubeDLRawData.extractor.includes('search')
+              ? YoutubeDLRawData.video_url
+                  ?? YoutubeDLRawData.webpage_url
+                  ?? undefined
+              : undefined
+                  ?? (YoutubeDLRawData.entries
+                  && YoutubeDLRawData.entries[0]
+                  && YoutubeDLRawData.entries[0].webpage_url
+                    ? YoutubeDLRawData.entries[0].video_url
+                      ?? YoutubeDLRawData.entries[0].webpage_url
+                      ?? undefined
+                    : undefined)
+                  ?? ExtraValue.url
+                  ?? undefined,
+          )
+          ?? ExtraValue.stream_url
+          ?? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
+            ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format.includes('audio')).url
+            : undefined)
+          ?? (YoutubeDLRawData.requested_formats
+          && YoutubeDLRawData.requested_formats[0]
+            ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
+            : undefined)
+          ?? (YoutubeDLRawData.entries
+          && YoutubeDLRawData.entries[0]
+          && YoutubeDLRawData.entries[0].formats
+          && YoutubeDLRawData.entries[0].requested_formats[0]
+            ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format.includes('audio')).url
+            : undefined)
+          ?? (YoutubeDLRawData.entries
+          && YoutubeDLRawData.entries[0]
+          && YoutubeDLRawData.entries[0].requested_formats
+          && YoutubeDLRawData.entries[0].requested_formats[0]
+            ? YoutubeDLRawData.entries[0].requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
+            : undefined)
+          ?? undefined
         : undefined,
       stream_type: StreamValueRecordBoolean
         ? YoutubeSourceStreamData
