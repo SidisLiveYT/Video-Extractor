@@ -300,18 +300,28 @@ class YoutubeDLExtractor {
           ? YoutubeSourceStreamData.type
           : undefined ?? undefined
         : undefined,
-      stream_duration:
-        extractor === 'youtube'
-          ? (YoutubeDLRawData.duration
-              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-                ? YoutubeDLRawData.entries[0].duration
-                : undefined)
-              ?? 0) * 1000
-          : YoutubeDLRawData.duration
+      stream_duration: (
+        YoutubeDLRawData.extractor
+        ?? YoutubeDLRawData.extractor_key
+        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+          ? YoutubeDLRawData.entries[0].extractor
+          : undefined)
+        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+          ? YoutubeDLRawData.entries[0].extractor_key
+          : undefined)
+        ?? undefined
+      ).includes('youtube')
+        ? (YoutubeDLRawData.duration
             ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
               ? YoutubeDLRawData.entries[0].duration
               : undefined)
-            ?? 0,
+            ?? 0) * 1000
+        : YoutubeDLRawData.duration
+          ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+            ? YoutubeDLRawData.entries[0].duration
+            : undefined)
+          ?? 0,
+
       stream_video_Id:
         (YoutubeDLRawData.display_id
         ?? (YoutubeDLRawData.display_id
@@ -326,7 +336,17 @@ class YoutubeDLExtractor {
           : undefined)
         ?? undefined,
       stream_human_duration: YoutubeDLExtractor.HumanTimeConversion(
-        extractor === 'youtube'
+        (
+          YoutubeDLRawData.extractor
+          ?? YoutubeDLRawData.extractor_key
+          ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+            ? YoutubeDLRawData.entries[0].extractor
+            : undefined)
+          ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+            ? YoutubeDLRawData.entries[0].extractor_key
+            : undefined)
+          ?? undefined
+        ).includes('youtube')
           ? (YoutubeDLRawData.duration
               ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
                 ? YoutubeDLRawData.entries[0].duration
