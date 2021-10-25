@@ -32,13 +32,15 @@ npm install video-extractor@latest
 Extractor Video/Playlist/Album Data from any Platform :-
 
 ```
-const { Extractor , StreamDownloader} = require('video-extractor') //For CommonJS
+const { Extractor , StreamDownloader , HumanTimeConversion } = require('video-extractor') //For CommonJS
                             OR
-import { Extractor, StreamDownloader } from 'video-extractor' //for ES6
+import { Extractor, StreamDownloader , HumanTimeConversion } from 'video-extractor' //for ES6
 
 
 var Data = await Extractor(Url || 'Despacito')
 var StreamData = await StreamDownloader(Url || 'Despacito')
+var HumanTime = HumanTimeConversion(MilliSeconds)
+
 ```
 
 ## Structure of Data/Track
@@ -56,10 +58,13 @@ Data : {
       author_link: String,
       description: String,
       custom_extractor: `youtube-dl`,
-      duration: 0,
-      preview_stream_url: String,
-      stream: String,
-      stream_type: String,  //if you use StreamDownloader()
+      duration: Number
+      human_duration: String,
+      stream: String,  // using StreamDownloader() will give "stream Data" or else undefined or 0
+      stream_type: String,
+      stream_duration: Number,
+      stream_video_Id: String,
+      stream_human_duration: Number,
       orignal_extractor: 'youtube' | 'spotify' | 'facebook' | 'arbitrary',
       thumbnail: String,
       channelId: 0 || String,
@@ -71,10 +76,37 @@ Data : {
   ]
 }
 ```
-
+- `Extractor() is same as StreamDownloader() but it will not download info related to Streams like - "stream","stream_type" and e.t.c , just the info about the Query`
 - `Data.tracks[0].stream can be used in terms of stream value in @discordjs/voice or any other Audio package .`
 - `Object can be seen undefined or undefined based on platform , like channelId and channel_url isn't present for facebook and soundcloud , But most usable stuff will be there for all shorts of Videos`
 - `Video-Extractor Supports Live Streams of Youtubes and you can stream for your discord.js/voice Audio Resource stream value`
+
+## Use-Case for @discordjs/voice Package
+
+```
+const { StreamDownloader } = require('video-extractor')
+const { createAudioResource } = require('@discordjs/voice')
+
+const Data = await StreamDownloader('Despacito', {
+  Limit: 1,
+  Quality: 'highest',
+  Proxy: undefined, //[{"Ip-Address:Port-Number"}] Format(Proxy)
+  IgnoreError: true,
+})
+
+var Audio_Resource = createAudioResource(Data.tracks[0].stream ,{
+  inputType: Data.tracks[0].stream_type
+})
+
+
+/*
+
+- Rest is mentioned in @discordjs/voice examples , from here "Audio_Resource" is important
+- Extractor() is same as StreamDownloader() but it will not download info related to Streams like - "stream","stream_type" and e.t.c , just the info about the Query
+
+*/
+
+```
 
 ## Links
 

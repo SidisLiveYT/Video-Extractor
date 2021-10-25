@@ -114,6 +114,17 @@ class YoutubeDLExtractor {
         )
         : undefined
       : undefined;
+
+    extractor = extractor
+      ?? YoutubeDLRawData.extractor
+      ?? YoutubeDLRawData.extractor_key
+      ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+        ? YoutubeDLRawData.entries[0].extractor
+        : undefined)
+      ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+        ? YoutubeDLRawData.entries[0].extractor_key
+        : undefined)
+      ?? undefined;
     const track = {
       Id: 0,
       url:
@@ -133,8 +144,8 @@ class YoutubeDLExtractor {
           : undefined)
         ?? undefined,
       video_Id:
-        (ExtraValue.video_Id
-        ?? YoutubeDLRawData.display_id
+        ExtraValue.video_Id
+        ?? (YoutubeDLRawData.display_id
         ?? (YoutubeDLRawData.display_id
           && !YoutubeDLRawData.extractor.includes('search'))
           ? YoutubeDLRawData.display_id
@@ -191,12 +202,34 @@ class YoutubeDLExtractor {
         ?? undefined,
       custom_extractor: 'youtube-dl',
       duration:
-        ExtraValue.duration
-        ?? YoutubeDLRawData.duration
-        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-          ? YoutubeDLRawData.entries[0].duration
-          : undefined)
-        ?? 0,
+        extractor === 'youtube'
+          ? (ExtraValue.duration
+              ?? YoutubeDLRawData.duration
+              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                ? YoutubeDLRawData.entries[0].duration
+                : undefined)
+              ?? 0) * 1000
+          : ExtraValue.duration
+            ?? YoutubeDLRawData.duration
+            ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+              ? YoutubeDLRawData.entries[0].duration
+              : undefined)
+            ?? 0,
+      human_duration: YoutubeDLExtractor.HumanTimeConversion(
+        extractor === 'youtube'
+          ? (ExtraValue.duration
+              ?? YoutubeDLRawData.duration
+              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                ? YoutubeDLRawData.entries[0].duration
+                : undefined)
+              ?? 0) * 1000
+          : ExtraValue.duration
+              ?? YoutubeDLRawData.duration
+              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                ? YoutubeDLRawData.entries[0].duration
+                : undefined)
+              ?? 0,
+      ),
       preview_stream_url:
         ExtraValue.stream_url
         ?? YoutubeDLRawData.url
@@ -267,17 +300,45 @@ class YoutubeDLExtractor {
           ? YoutubeSourceStreamData.type
           : undefined ?? undefined
         : undefined,
-      orignal_extractor:
-        extractor
-        ?? YoutubeDLRawData.extractor
-        ?? YoutubeDLRawData.extractor_key
-        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-          ? YoutubeDLRawData.entries[0].extractor
+      stream_duration:
+        extractor === 'youtube'
+          ? (YoutubeDLRawData.duration
+              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                ? YoutubeDLRawData.entries[0].duration
+                : undefined)
+              ?? 0) * 1000
+          : YoutubeDLRawData.duration
+            ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+              ? YoutubeDLRawData.entries[0].duration
+              : undefined)
+            ?? 0,
+      stream_video_Id:
+        (YoutubeDLRawData.display_id
+        ?? (YoutubeDLRawData.display_id
+          && !YoutubeDLRawData.extractor.includes('search'))
+          ? YoutubeDLRawData.display_id
           : undefined)
-        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-          ? YoutubeDLRawData.entries[0].extractor_key
+        ?? (YoutubeDLRawData.entries
+        && YoutubeDLRawData.entries[0]
+        && YoutubeDLRawData.entries[0].display_id
+          ? YoutubeDLRawData.entries[0].display_id
+            ?? YoutubeDLRawData.entries[0].id
           : undefined)
-        ?? 'arbitrary',
+        ?? undefined,
+      stream_human_duration: YoutubeDLExtractor.HumanTimeConversion(
+        extractor === 'youtube'
+          ? (YoutubeDLRawData.duration
+              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                ? YoutubeDLRawData.entries[0].duration
+                : undefined)
+              ?? 0) * 1000
+          : YoutubeDLRawData.duration
+              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                ? YoutubeDLRawData.entries[0].duration
+                : undefined)
+              ?? 0,
+      ),
+      orignal_extractor: extractor ?? 'arbitrary',
       thumbnail:
         ExtraValue.thumbnail
         ?? (YoutubeDLRawData.thumbnail && YoutubeDLRawData.thumbnail[0]
@@ -329,6 +390,49 @@ class YoutubeDLExtractor {
         ?? 0,
     };
     return track;
+  }
+
+  static HumanTimeConversion(DurationMilliSeconds = 0) {
+    if (typeof DurationMilliSeconds !== 'number') return void null;
+    DurationMilliSeconds /= 1000;
+    let ProcessedString = '';
+    for (
+      let DurationArray = [
+          [Math.floor(DurationMilliSeconds / 31536e3), 'Years'],
+          [Math.floor((DurationMilliSeconds % 31536e3) / 86400), 'Days'],
+          [
+            Math.floor(((DurationMilliSeconds % 31536e3) % 86400) / 3600),
+            'Hours',
+          ],
+          [
+            Math.floor(
+              (((DurationMilliSeconds % 31536e3) % 86400) % 3600) / 60,
+            ),
+            'Minutes',
+          ],
+          [
+            Math.floor(
+              (((DurationMilliSeconds % 31536e3) % 86400) % 3600) % 60,
+            ),
+            'Seconds',
+          ],
+        ],
+        SideArray = 0,
+        GarbageValue = DurationArray.length;
+      SideArray < GarbageValue;
+      SideArray++
+    ) {
+      DurationArray[SideArray][0] !== 0
+        && (ProcessedString += ` ${DurationArray[SideArray][0]} ${
+          DurationArray[SideArray][0] === 1
+            ? DurationArray[SideArray][1].substr(
+              0,
+              DurationArray[SideArray][1].length - 1,
+            )
+            : DurationArray[SideArray][1]
+        }`);
+    }
+    return ProcessedString.trim();
   }
 }
 

@@ -8,9 +8,13 @@ export type YoutubeDLTrack = {
   description: String
   custom_extractor: `youtube-dl`
   duration: Number
+  human_duration: String,
   preview_stream_url: String
-  stream: String
+  stream: String,
   stream_type: String,
+  stream_duration: Number,
+  stream_video_Id: String,
+  stream_human_duration: String,
   orignal_extractor: String | 'youtube' | 'spotify' | 'facebook' | 'arbitrary'
   thumbnail: String
   channelId: String | Number
