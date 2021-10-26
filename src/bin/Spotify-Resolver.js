@@ -2,28 +2,35 @@ const { getData, getPreview } = require('spotify-url-info');
 const YoutubeDLExtractor = require('./Track-Extractor');
 
 async function SpotifyScrapper(Url, StreamValueRecordBoolean = undefined) {
-  const SpotifyTracksRawData = await getData(Url);
-  if (SpotifyTracksRawData.type === 'track') {
-    const CacheTrack = await SpotifyTrackExtractor(
-      SpotifyTracksRawData,
-      StreamValueRecordBoolean,
+  try {
+    const SpotifyTracksRawData = await getData(Url);
+    if (SpotifyTracksRawData.type === 'track') {
+      const CacheTrack = await SpotifyTrackExtractor(
+        SpotifyTracksRawData,
+        StreamValueRecordBoolean,
+      );
+      return {
+        playlist: false,
+        tracks: [CacheTrack],
+      };
+    }
+
+    const ProcessedTracks = await Promise.all(
+      SpotifyTracksRawData.tracks.items.map(
+        async (Track) => await SpotifyTrackExtractor(Track, StreamValueRecordBoolean),
+      ),
     );
+
+    return {
+      playlist: !!ProcessedTracks[0],
+      tracks: ProcessedTracks,
+    };
+  } catch (error) {
     return {
       playlist: false,
-      tracks: [CacheTrack],
+      tracks: [],
     };
   }
-
-  const ProcessedTracks = await Promise.all(
-    SpotifyTracksRawData.tracks.items.map(
-      async (Track) => await SpotifyTrackExtractor(Track, StreamValueRecordBoolean),
-    ),
-  );
-
-  return {
-    playlist: !!ProcessedTracks[0],
-    tracks: ProcessedTracks,
-  };
 
   async function SpotifyTrackExtractor(
     SpotifyTrackRawData,
