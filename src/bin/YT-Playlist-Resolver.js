@@ -1,11 +1,26 @@
-const { search } = require('play-dl');
+const { search, setToken } = require('play-dl');
 const YoutubeDLExtractor = require('./Track-Extractor');
 
-async function YoutubePlaylistResolver(
-  Url,
-  StreamValueRecordBoolean = undefined,
-) {
-  try {
+class YTPlaylistParser {
+  static #YTCookies = undefined
+
+  static async YoutubePlaylistResolver(
+    Url,
+    ExtractOptions = {
+      Proxy: undefined,
+      YTCookies: undefined,
+      YoutubeDLCookiesFilePath: undefined,
+    },
+    StreamValueRecordBoolean = undefined,
+  ) {
+    if (ExtractOptions && ExtractOptions.YTCookies && ExtractOptions.YTCookies !== YTPlaylistParser.#YTCookies) {
+      YTPlaylistParser.#YTCookies = ExtractOptions.YTCookies;
+      setToken({
+        youtube: {
+          cookie: YTPlaylistParser.#YTCookies,
+        },
+      });
+    }
     const PlaylistData = search(Url, {
       limit: 100,
       source: { yoututbe: 'playlist' },
@@ -21,9 +36,7 @@ async function YoutubePlaylistResolver(
     );
     await Promise.all(CacheTracks);
     return CacheTracks;
-  } catch (error) {
-    return [];
   }
 }
 
-module.exports = YoutubePlaylistResolver;
+module.exports = YTPlaylistParser.YoutubePlaylistResolver;

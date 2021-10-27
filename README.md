@@ -10,6 +10,7 @@
 
 Video Extractor is a Extractor/Scrapper/Downloader and Helps Players to fetch data from custom-youtube-dl or Custom Extractors , as Per reduces extra work and credentials.
 
+- Supports Proxy , Cookies Headers for YT Playlists and Cookies.txt File for youtube-dl as ExtractorOptions
 - Even Supports Youtube Live Streams to Stream on your Web Application(discord bots , html player and e.t.c)
 - Object-oriented , means Value returned in a structure format
 - Python Based Browser Extrator -> Need to have Python installed in binary \$PATH
@@ -33,11 +34,15 @@ Extractor Video/Playlist/Album Data from any Platform :-
 
 ```
 const { Extractor , StreamDownloader , HumanTimeConversion } = require('video-extractor') //For CommonJS
-                            OR
+                            //OR
 import { Extractor, StreamDownloader , HumanTimeConversion } from 'video-extractor' //for ES6
 
 
-var Data = await Extractor(Url || 'Despacito')
+var Data = await Extractor(Url || 'Despacito', {
+  Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
+  YTCookies: undefined,  //Youtube Cookies Value ( a very Big String here )
+  YoutubeDLCookiesFilePath: undefined //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
+})
 var StreamData = await StreamDownloader(Url || 'Despacito')
 var HumanTime = HumanTimeConversion(MilliSeconds)
 
@@ -73,9 +78,11 @@ Data : {
       is_live: false,
       dislikes: 0,
     }
-  ]
+  ],
+  error: String | Error | undefined
 }
 ```
+- `Cookies.txt File can be exported from "Cookies.txt" extension on chrome and netscape cookies file type is needed and only path to taht file is neeed for youtube-dl and for YT Cookies for YT Playlist , just give Cookies headers`
 - `Extractor() is same as StreamDownloader() but it will not download info related to Streams like - "stream","stream_type" and e.t.c , just the info about the Query`
 - `Data.tracks[0].stream can be used in terms of stream value in @discordjs/voice or any other Audio package .`
 - `Object can be seen undefined or undefined based on platform , like channelId and channel_url isn't present for facebook and soundcloud , But most usable stuff will be there for all shorts of Videos`
@@ -88,11 +95,12 @@ const { StreamDownloader } = require('video-extractor')
 const { createAudioResource } = require('@discordjs/voice')
 
 const Data = await StreamDownloader('Despacito', {
-  Limit: 1,
-  Quality: 'highest',
-  Proxy: undefined, //[{"Ip-Address:Port-Number"}] Format(Proxy)
-  IgnoreError: true,
+  Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
+  YTCookies: undefined,  //Youtube Cookies Value ( a very Big String here )
+  YoutubeDLCookiesFilePath: undefined //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
 })
+
+if(Data.error) throw error; 
 
 var Audio_Resource = createAudioResource(Data.tracks[0].stream ,{
   inputType: Data.tracks[0].stream_type

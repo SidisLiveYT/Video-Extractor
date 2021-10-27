@@ -1,60 +1,87 @@
 const YoutubeDL = require('@sidislive/youtube-dl-exec');
 const isUrl = require('is-url');
 const { stream } = require('play-dl');
+const fs = require('fs');
 
 class YoutubeDLExtractor {
+  static #Proxy = undefined
+
+  static #YoutubeDLCookiesFilePath = undefined
+
   static async YoutubeDLExtraction(
     Query,
+    ExtractOptions = {
+      Proxy: undefined,
+      YTCookies: undefined,
+      YoutubeDLCookiesFilePath: undefined,
+    },
     extractor = false,
     ExtraValue = {},
     SpecialPlaylistRequest = false,
     StreamValueRecordBoolean = undefined,
   ) {
-    try {
-      Query = !isUrl(Query) ? `ytsearch:${Query}` : Query;
-      const YoutubeDLRawDatas = await YoutubeDL(
-        Query,
-        {
-          dumpSingleJson: true,
-          skipDownload: true,
-          simulate: true,
-          noWarnings: true,
-          noCallHome: true,
-          noCheckCertificate: true,
-          preferFreeFormats: true,
-          youtubeSkipDashManifest: true,
-        },
-        {
-          stdio: ['ignore', 'pipe', 'ignore'],
-        },
-      );
-      if (!SpecialPlaylistRequest) {
-        return await YoutubeDLExtractor.#YoutubeDLTrackModel(
-          YoutubeDLRawDatas[0] ?? YoutubeDLRawDatas,
-          extractor,
-          ExtraValue ?? {},
-          StreamValueRecordBoolean,
-        );
-      }
-      const ProcessedYoutubeDLTrack = YoutubeDLRawDatas && YoutubeDLRawDatas.entries
-        ? await Promise.all(
-          await YoutubeDLRawDatas.entries.map(
-            async (Track) => await YoutubeDLExtractor.#YoutubeDLTrackModel(
-              Track,
-              extractor,
-              undefined,
-              StreamValueRecordBoolean,
-            ),
-          ),
-        )
-        : [];
-      return ProcessedYoutubeDLTrack;
-    } catch (error) {
-      return void undefined;
+    Query = !isUrl(Query) ? `ytsearch:${Query}` : Query;
+    if (
+      ExtractOptions.YoutubeDLCookiesFilePath
+        && YoutubeDLExtractor.YoutubeDLCookiesFilePath
+          !== ExtractOptions.YoutubeDLCookiesFilePath
+        && fs.statSync(`${ExtractOptions.YoutubeDLCookiesFilePath}`).isFile()
+    ) {
+      YoutubeDLExtractor.YoutubeDLCookiesFilePath = ExtractOptions.YoutubeDLCookiesFilePath;
     }
+    if (
+      ExtractOptions
+        && ExtractOptions.Proxy
+        && ExtractOptions.Proxy !== YoutubeDLExtractor.#Proxy
+    ) YoutubeDLExtractor.#Proxy = ExtractOptions.Proxy;
+    const ExtracCredentials = {};
+    if (YoutubeDLExtractor.#Proxy) ExtracCredentials.proxy = YoutubeDLExtractor.#Proxy;
+    if (YoutubeDLExtractor.#YoutubeDLCookiesFilePath) ExtracCredentials.cookies = YoutubeDLExtractor.#YoutubeDLCookiesFilePath;
+    const YoutubeDLRawDatas = await YoutubeDL(
+      Query,
+      {
+        ...ExtracCredentials,
+        dumpSingleJson: true,
+        skipDownload: true,
+        simulate: true,
+        noWarnings: true,
+        noCallHome: true,
+        noCheckCertificate: true,
+        preferFreeFormats: true,
+        youtubeSkipDashManifest: true,
+      },
+      {
+        stdio: ['ignore', 'pipe', 'ignore'],
+      },
+    );
+
+    if (!SpecialPlaylistRequest) {
+      return await YoutubeDLExtractor.#YoutubeDLTrackModel(
+        YoutubeDLRawDatas[0] ?? YoutubeDLRawDatas,
+        extractor,
+        ExtraValue ?? {},
+        StreamValueRecordBoolean,
+      );
+    }
+    const ProcessedYoutubeDLTrack = YoutubeDLRawDatas && YoutubeDLRawDatas.entries
+      ? await Promise.all(
+        await YoutubeDLRawDatas.entries.map(
+          async (Track) => await YoutubeDLExtractor.#YoutubeDLTrackModel(
+            Track,
+            extractor,
+            undefined,
+            StreamValueRecordBoolean,
+          ),
+        ),
+      )
+      : [];
+    return ProcessedYoutubeDLTrack;
   }
 
   static #streamextractor(Url) {
+    const ExtracCredentials = {};
+    if (YoutubeDLExtractor.#Proxy) ExtracCredentials.proxy = YoutubeDLExtractor.#Proxy;
+    if (YoutubeDLExtractor.#YoutubeDLCookiesFilePath) ExtracCredentials.cookies = YoutubeDLExtractor.#YoutubeDLCookiesFilePath;
     const YoutubeDLProcess = YoutubeDL.raw(
       Url,
       {
@@ -62,6 +89,7 @@ class YoutubeDLExtractor {
         q: '',
         f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',
         r: '100K',
+        ...ExtracCredentials,
       },
       {
         stdio: ['ignore', 'pipe', 'ignore'],
