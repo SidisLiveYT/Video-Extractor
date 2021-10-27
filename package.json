@@ -60,7 +60,7 @@
   "dependencies": {
     "@sidislive/youtube-dl-exec": "^1.0.0",
     "is-url": "^1.2.4",
-    "play-dl": "^1.2.2",
+    "play-dl": "^1.2.3",
     "spotify-url-info": "^2.2.3"
   },
   "directories": {
