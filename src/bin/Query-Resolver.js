@@ -36,16 +36,14 @@ async function QueryResolver(
             StreamValueRecordBoolean,
           ),
         ]
-        : [
-          await YoutubeDLExtractor.YoutubeDLExtraction(
-            Query,
-            ExtractOptions,
-            undefined,
-            undefined,
-            undefined,
-            StreamValueRecordBoolean,
-          ),
-        ]);
+        : await YoutubeDLExtractor.YoutubeDLExtraction(
+          Query,
+          ExtractOptions,
+          undefined,
+          undefined,
+          undefined,
+          StreamValueRecordBoolean,
+        ));
     const YoutubeDLTracks = {
       playlist: ValidateUrlResult
         ? ValidateUrlResult.includes('playlist')

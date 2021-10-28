@@ -52,7 +52,7 @@ async function SoundCloudExtractor(
           ? [SoundCloudRawTrack.tracks]
           : [SoundCloudRawTrack]) ?? [],
       error:
-        SoundCloudRawTrack && SoundCloudRawTrack.error
+        SoundCloudRawTrack && SoundCloudRawTrack.tracks
           ? SoundCloudRawTrack.error
           : undefined,
     };

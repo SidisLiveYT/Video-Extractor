@@ -22,6 +22,7 @@ class YoutubeDLExtractor {
     SpecialPlaylistRequest = false,
     StreamValueRecordBoolean = undefined,
     SecretDepth = 0,
+    PostTrackName = undefined,
   ) {
     const SenderQuery = !isUrl(Query) ? `ytsearch:${Query}` : Query;
     if (
@@ -98,10 +99,11 @@ class YoutubeDLExtractor {
           'Song has been Ratelimited | Please change Song Name or Url',
         );
       }
-      const PostTrackName = SecretDepth === 0 ? Query : PostTrackName;
+      PostTrackName = SecretDepth === 0 ? Query : PostTrackName;
       const Value = (await search(Query, { limit: SecretDepth + 2 }))[
         SecretDepth + 1
       ];
+      if (!Value || (Value && !Value.title)) throw new Error(`[429] Song - "${PostTrackName}" got Ratelimited`);
       const Song = await YoutubeDLExtractor.YoutubeDLExtraction(
         Value.title,
         ExtractOptions,
@@ -110,9 +112,12 @@ class YoutubeDLExtractor {
         null,
         true,
         SecretDepth + 1,
+        PostTrackName,
       );
+      if (SecretDepth !== 0) return Song;
+
       return {
-        track: Song,
+        tracks: Song,
         error: `[429] Song - "${PostTrackName}" got Ratelimited`,
       };
     }
