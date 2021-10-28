@@ -59,7 +59,7 @@
     "npm": ">=7.0.0"
   },
   "dependencies": {
-    "@sidislive/youtube-dl-exec": "^1.0.0",
+    "@sidislive/youtube-dl-exec": "^1.0.1",
     "fs": "^0.0.1-security",
     "is-url": "^1.2.4",
     "play-dl": "^1.2.3",
