@@ -2,8 +2,6 @@ const { search, setToken } = require('play-dl');
 const YoutubeDLExtractor = require('./Track-Extractor');
 
 class YTPlaylistParser {
-  static #YTCookies = undefined
-
   static async YoutubePlaylistResolver(
     Url,
     ExtractOptions = {
@@ -13,14 +11,6 @@ class YTPlaylistParser {
     },
     StreamValueRecordBoolean = undefined,
   ) {
-    if (ExtractOptions && ExtractOptions.YTCookies && ExtractOptions.YTCookies !== YTPlaylistParser.#YTCookies) {
-      YTPlaylistParser.#YTCookies = ExtractOptions.YTCookies;
-      setToken({
-        youtube: {
-          cookie: YTPlaylistParser.#YTCookies,
-        },
-      });
-    }
     const PlaylistData = search(Url, {
       limit: 100,
       source: { yoututbe: 'playlist' },
@@ -28,6 +18,7 @@ class YTPlaylistParser {
     const CacheTracks = PlaylistData.map(
       async (Data) => await YoutubeDLExtractor.YoutubeDLExtraction(
         Data.url ?? Data.name ?? Data.title,
+        ExtractOptions,
         'youtube',
         undefined,
         undefined,

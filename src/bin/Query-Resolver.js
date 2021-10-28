@@ -1,4 +1,4 @@
-const { validate, search } = require('play-dl');
+const { validate } = require('play-dl');
 const YoutubeDLExtractor = require('./Track-Extractor');
 const YoutubePlaylistResolver = require('./YT-Playlist-Resolver');
 
@@ -31,36 +31,28 @@ async function QueryResolver(
             StreamValueRecordBoolean,
           )
           : undefined)
-        ?? (ValidateUrlResult && Query.match(YoutubeUrlRegex)
+        ?? (ValidateUrlResult
+        && (ValidateUrlResult.includes('search') || Query.match(YoutubeUrlRegex))
           ? [
-            await YoutubeDLExtractor.YoutubeDLExtraction(
+            (await YoutubeDLExtractor.YoutubeDLExtraction(
               Query,
               ExtractOptions,
               'youtube',
               undefined,
               undefined,
               StreamValueRecordBoolean,
-            ),
+            )),
           ]
-          : ValidateUrlResult.includes('search')
-            ? await YoutubeDLExtractor.YoutubeDLExtraction(
-              (await search(Query, { limit: 1 }))[0].url,
+          : [
+            await YoutubeDLExtractor.YoutubeDLExtraction(
+              Query,
               ExtractOptions,
               undefined,
               undefined,
               undefined,
               StreamValueRecordBoolean,
-            )
-            : [
-              await YoutubeDLExtractor.YoutubeDLExtraction(
-                Query,
-                ExtractOptions,
-                undefined,
-                undefined,
-                undefined,
-                StreamValueRecordBoolean,
-              ),
-            ]),
+            ),
+          ]),
       error: undefined,
     };
     return YoutubeDLTracks;
