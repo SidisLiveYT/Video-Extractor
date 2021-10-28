@@ -45,7 +45,7 @@ async function QueryResolver(
           ]
           : ValidateUrlResult.includes('search')
             ? await YoutubeDLExtractor.YoutubeDLExtraction(
-              (await YoutubeSearch(Query, { limit: 1 })).url,
+              (await YoutubeSearch(Query, { limit: 1 })).items[0].url,
               ExtractOptions,
               undefined,
               undefined,
