@@ -16,18 +16,18 @@ class YTPlaylistParser {
       limit: 100,
       source: { yoututbe: 'playlist' },
     });
-    const CacheTracks = PlaylistData.map(
-      async (Data) => await YoutubeDLExtractor.YoutubeDLExtraction(
-        Data.title,
-        ExtractOptions,
-        'youtube',
-        undefined,
-        undefined,
-        StreamValueRecordBoolean,
+    return await Promise.all(
+      PlaylistData.map(
+        async (Data) => await YoutubeDLExtractor.YoutubeDLExtraction(
+          Data.title,
+          ExtractOptions,
+          'youtube',
+          undefined,
+          undefined,
+          StreamValueRecordBoolean,
+        ),
       ),
     );
-    await Promise.all(CacheTracks);
-    return CacheTracks;
   }
 }
 

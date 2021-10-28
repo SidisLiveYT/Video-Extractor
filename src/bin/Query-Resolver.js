@@ -63,8 +63,8 @@ async function QueryResolver(
         (CacheTracks && CacheTracks[0] && CacheTracks[0].error
           ? CacheTracks.map((instance) => instance.error)
           : undefined)
-        ?? (CacheTracks && CacheTracks.error ? CacheTracks.error : CacheTracks)
-        ?? [],
+        ?? (CacheTracks && CacheTracks.error ? CacheTracks.error : undefined)
+        ?? undefined,
     };
     return YoutubeDLTracks;
   } catch (error) {

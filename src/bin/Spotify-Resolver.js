@@ -42,11 +42,11 @@ async function SpotifyScrapper(
     return {
       playlist: !!ProcessedTracks[0],
       tracks:
-        (ProcessedTracks && ProcessedTracks.tracks
+        (ProcessedTracks && ProcessedTracks[0].tracks
           ? ProcessedTracks.map((instance) => instance.tracks)
           : ProcessedTracks) ?? [],
       error:
-        ProcessedTracks && ProcessedTracks.error
+        ProcessedTracks && ProcessedTracks[0].error
           ? ProcessedTracks.map((instance) => instance.error)
           : undefined,
     };
