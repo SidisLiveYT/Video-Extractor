@@ -64,7 +64,7 @@
     "is-url": "^1.2.4",
     "play-dl": "^1.2.3",
     "spotify-url-info": "^2.2.3",
-    "youtube-sr": "^4.1.8"
+    "ytsr": "^3.5.3"
   },
   "directories": {
     "example": "example"

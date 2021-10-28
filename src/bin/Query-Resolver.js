@@ -1,5 +1,5 @@
 const { validate } = require('play-dl');
-const { searchOne } = require('youtube-sr').default;
+const YoutubeSearch = require('ytsr');
 const YoutubeDLExtractor = require('./Track-Extractor');
 const YoutubePlaylistResolver = require('./YT-Playlist-Resolver');
 
@@ -45,7 +45,7 @@ async function QueryResolver(
           ]
           : ValidateUrlResult.includes('search')
             ? await YoutubeDLExtractor.YoutubeDLExtraction(
-              (await searchOne(Query, 'video', false)).url,
+              (await YoutubeSearch(Query, { limit: 1 })).url,
               ExtractOptions,
               undefined,
               undefined,
