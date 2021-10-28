@@ -20,7 +20,6 @@ class YoutubeDLExtractor {
     SpecialPlaylistRequest = false,
     StreamValueRecordBoolean = undefined,
   ) {
-    Query = !isUrl(Query) ? `ytsearch:${Query}` : Query;
     if (
       ExtractOptions.YoutubeDLCookiesFilePath
         && YoutubeDLExtractor.YoutubeDLCookiesFilePath
