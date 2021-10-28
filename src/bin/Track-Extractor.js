@@ -1,4 +1,4 @@
-const YoutubeDL = require('@sidislive/youtube-dl-exec');
+const YoutubeDL = require('youtube-dl-exec');
 const isUrl = require('is-url');
 const { stream } = require('play-dl');
 const fs = require('fs');
