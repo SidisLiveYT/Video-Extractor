@@ -20,8 +20,11 @@ async function SpotifyScrapper(
       );
       return {
         playlist: false,
-        tracks: [CacheTrack],
-        error: undefined,
+        tracks:
+          (CacheTrack && CacheTrack.tracks
+            ? [CacheTrack.tracks]
+            : [CacheTrack]) ?? [],
+        error: CacheTrack && CacheTrack.error ? CacheTrack.error : undefined,
       };
     }
 
@@ -37,8 +40,14 @@ async function SpotifyScrapper(
 
     return {
       playlist: !!ProcessedTracks[0],
-      tracks: ProcessedTracks,
-      error: undefined,
+      tracks:
+        (ProcessedTracks && ProcessedTracks.tracks
+          ? ProcessedTracks.map((instance) => instance.tracks)
+          : ProcessedTracks) ?? [],
+      error:
+        ProcessedTracks && ProcessedTracks.error
+          ? ProcessedTracks.map((instance) => instance.error)
+          : undefined,
     };
   } catch (error) {
     return {
@@ -65,53 +74,53 @@ async function SpotifyScrapper(
     const track = {
       Id: 0,
       url:
-          (SpotifyTrackRawData.external_urls
-            ? SpotifyTrackRawData.external_urls.spotify
-              ?? SpotifyTrackRawData.track.external_urls.spotify
-              ?? undefined
-            : undefined)
-          ?? (VideoThumbnailPreview ? VideoThumbnailPreview.link : undefined)
-          ?? undefined,
+        (SpotifyTrackRawData.external_urls
+          ? SpotifyTrackRawData.external_urls.spotify
+            ?? SpotifyTrackRawData.track.external_urls.spotify
+            ?? undefined
+          : undefined)
+        ?? (VideoThumbnailPreview ? VideoThumbnailPreview.link : undefined)
+        ?? undefined,
       video_Id:
-          (SpotifyTrackRawData.track
-            ? SpotifyTrackRawData.track.id
-            : undefined)
-          ?? SpotifyTrackRawData.id
-          ?? undefined,
+        (SpotifyTrackRawData.track
+          ? SpotifyTrackRawData.track.id
+          : undefined)
+        ?? SpotifyTrackRawData.id
+        ?? undefined,
       title:
-          SpotifyTrackRawData.name
-          ?? (SpotifyTrackRawData.track
-            ? SpotifyTrackRawData.track.name
-            : undefined)
-          ?? VideoThumbnailPreview.title
-          ?? undefined,
+        SpotifyTrackRawData.name
+        ?? (SpotifyTrackRawData.track
+          ? SpotifyTrackRawData.track.name
+          : undefined)
+        ?? VideoThumbnailPreview.title
+        ?? undefined,
       author:
-          (SpotifyTrackRawData.artists && SpotifyTrackRawData.artists[0]
-            ? SpotifyTrackRawData.artists[0].name
-            : SpotifyTrackRawData.track
-              && SpotifyTrackRawData.track.artists
-              && SpotifyTrackRawData.track.artists[0]
-              ? SpotifyTrackRawData.track.artists[0].name
-              : undefined) ?? undefined,
+        (SpotifyTrackRawData.artists && SpotifyTrackRawData.artists[0]
+          ? SpotifyTrackRawData.artists[0].name
+          : SpotifyTrackRawData.track
+            && SpotifyTrackRawData.track.artists
+            && SpotifyTrackRawData.track.artists[0]
+            ? SpotifyTrackRawData.track.artists[0].name
+            : undefined) ?? undefined,
       author_link:
-          (SpotifyTrackRawData.artists && SpotifyTrackRawData.artists[0]
-            ? SpotifyTrackRawData.artists[0].url
-            : SpotifyTrackRawData.track
-              && SpotifyTrackRawData.track.artists
-              && SpotifyTrackRawData.track.artists[0]
-              ? SpotifyTrackRawData.track.artists[0].url
-              : undefined) ?? undefined,
+        (SpotifyTrackRawData.artists && SpotifyTrackRawData.artists[0]
+          ? SpotifyTrackRawData.artists[0].url
+          : SpotifyTrackRawData.track
+            && SpotifyTrackRawData.track.artists
+            && SpotifyTrackRawData.track.artists[0]
+            ? SpotifyTrackRawData.track.artists[0].url
+            : undefined) ?? undefined,
       description:
-          SpotifyTrackRawData.description
-          ?? VideoThumbnailPreview.description
-          ?? undefined,
+        SpotifyTrackRawData.description
+        ?? VideoThumbnailPreview.description
+        ?? undefined,
       custom_extractor: 'youtube-dl',
       duration:
-          SpotifyTrackRawData.duration_ms
-          ?? (SpotifyTrackRawData.track
-            ? SpotifyTrackRawData.track.duration_ms
-            : undefined)
-          ?? undefined,
+        SpotifyTrackRawData.duration_ms
+        ?? (SpotifyTrackRawData.track
+          ? SpotifyTrackRawData.track.duration_ms
+          : undefined)
+        ?? undefined,
       orignal_extractor: 'spotify',
       thumbnail: VideoThumbnailPreview.image ?? undefined,
       channelId: undefined,

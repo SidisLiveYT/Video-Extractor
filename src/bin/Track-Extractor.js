@@ -98,8 +98,12 @@ class YoutubeDLExtractor {
           'Song has been Ratelimited | Please change Song Name or Url',
         );
       }
-      return await YoutubeDLExtractor.YoutubeDLExtraction(
-        (await search(Query, { limit: SecretDepth + 2 }))[SecretDepth + 1].url,
+      const PostTrackName = SecretDepth === 0 ? Query : PostTrackName;
+      const Value = (await search(Query, { limit: SecretDepth + 2 }))[
+        SecretDepth + 1
+      ];
+      const Song = await YoutubeDLExtractor.YoutubeDLExtraction(
+        Value.title,
         ExtractOptions,
         extractor,
         ExtraValue,
@@ -107,6 +111,10 @@ class YoutubeDLExtractor {
         true,
         SecretDepth + 1,
       );
+      return {
+        track: Song,
+        error: `[429] Song - "${PostTrackName}" got Ratelimited`,
+      };
     }
   }
 

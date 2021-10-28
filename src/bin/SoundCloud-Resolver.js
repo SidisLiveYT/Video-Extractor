@@ -27,8 +27,14 @@ async function SoundCloudExtractor(
       );
       return {
         playlist: true,
-        tracks: YoutubeDLTracks,
-        error: undefined,
+        tracks:
+          (YoutubeDLTracks && !YoutubeDLTracks[0] && YoutubeDLTracks.tracks
+            ? YoutubeDLTracks.tracks
+            : YoutubeDLTracks) ?? [],
+        error:
+          YoutubeDLTracks && !YoutubeDLTracks[0] && YoutubeDLTracks.error
+            ? YoutubeDLTracks.error
+            : undefined,
       };
     }
     const SoundCloudRawTrack = await YoutubeDLExtractor.YoutubeDLExtraction(
@@ -41,8 +47,14 @@ async function SoundCloudExtractor(
     );
     return {
       playlist: false,
-      tracks: [SoundCloudRawTrack],
-      error: undefined,
+      tracks:
+        (SoundCloudRawTrack && SoundCloudRawTrack.tracks
+          ? [SoundCloudRawTrack.tracks]
+          : [SoundCloudRawTrack]) ?? [],
+      error:
+        SoundCloudRawTrack && SoundCloudRawTrack.error
+          ? SoundCloudRawTrack.error
+          : undefined,
     };
   } catch (error) {
     return {

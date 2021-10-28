@@ -14,6 +14,38 @@ async function QueryResolver(
   try {
     const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/;
     const ValidateUrlResult = await validate(Query);
+    const CacheTracks = (Query.match(YoutubeUrlRegex)
+      && ValidateUrlResult
+      && (ValidateUrlResult.includes('playlist')
+        || ValidateUrlResult.includes('album'))
+      ? await YoutubePlaylistResolver(
+        Query,
+        ExtractOptions,
+        StreamValueRecordBoolean,
+      )
+      : undefined)
+      ?? (ValidateUrlResult
+      && (ValidateUrlResult.includes('search') || Query.match(YoutubeUrlRegex))
+        ? [
+          await YoutubeDLExtractor.YoutubeDLExtraction(
+            Query,
+            ExtractOptions,
+            'youtube',
+            undefined,
+            undefined,
+            StreamValueRecordBoolean,
+          ),
+        ]
+        : [
+          await YoutubeDLExtractor.YoutubeDLExtraction(
+            Query,
+            ExtractOptions,
+            undefined,
+            undefined,
+            undefined,
+            StreamValueRecordBoolean,
+          ),
+        ]);
     const YoutubeDLTracks = {
       playlist: ValidateUrlResult
         ? ValidateUrlResult.includes('playlist')
@@ -21,39 +53,19 @@ async function QueryResolver(
           ?? undefined
         : false,
       tracks:
-        (Query.match(YoutubeUrlRegex)
-        && ValidateUrlResult
-        && (ValidateUrlResult.includes('playlist')
-          || ValidateUrlResult.includes('album'))
-          ? await YoutubePlaylistResolver(
-            Query,
-            ExtractOptions,
-            StreamValueRecordBoolean,
-          )
+        (CacheTracks && CacheTracks[0] && CacheTracks[0].tracks
+          ? CacheTracks.map((instance) => instance.tracks)
+          : CacheTracks)
+        ?? (CacheTracks && CacheTracks.tracks
+          ? CacheTracks.tracks
+          : CacheTracks)
+        ?? [],
+      error:
+        (CacheTracks && CacheTracks[0] && CacheTracks[0].error
+          ? CacheTracks.map((instance) => instance.error)
           : undefined)
-        ?? (ValidateUrlResult
-        && (ValidateUrlResult.includes('search') || Query.match(YoutubeUrlRegex))
-          ? [
-            (await YoutubeDLExtractor.YoutubeDLExtraction(
-              Query,
-              ExtractOptions,
-              'youtube',
-              undefined,
-              undefined,
-              StreamValueRecordBoolean,
-            )),
-          ]
-          : [
-            await YoutubeDLExtractor.YoutubeDLExtraction(
-              Query,
-              ExtractOptions,
-              undefined,
-              undefined,
-              undefined,
-              StreamValueRecordBoolean,
-            ),
-          ]),
-      error: undefined,
+        ?? (CacheTracks && CacheTracks.error ? CacheTracks.error : CacheTracks)
+        ?? [],
     };
     return YoutubeDLTracks;
   } catch (error) {

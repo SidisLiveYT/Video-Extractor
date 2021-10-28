@@ -79,7 +79,7 @@ Data : {
       dislikes: 0,
     }
   ],
-  error: String | Error | undefined
+  error: String | Error |  Error[]  | undefined
 }
 ```
 - `Cookies.txt File can be exported from "Cookies.txt" extension on chrome and netscape cookies file type is needed and only path to taht file is neeed for youtube-dl and for YT Cookies for YT Playlist , just give Cookies headers`

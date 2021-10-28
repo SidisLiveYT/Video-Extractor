@@ -27,7 +27,7 @@ export type YoutubeDLTrack = {
 export type YoutubeDLData = {
   playlist: Boolean
   tracks: Array<YoutubeDLTrack>
-  error: Error | String | undefined
+  error: Error | Error[] | String | undefined
 }
 
 export type ExtractOptions = {

@@ -17,7 +17,7 @@ class YTPlaylistParser {
     });
     const CacheTracks = PlaylistData.map(
       async (Data) => await YoutubeDLExtractor.YoutubeDLExtraction(
-        Data.url ?? Data.name ?? Data.title,
+        Data.title,
         ExtractOptions,
         'youtube',
         undefined,
