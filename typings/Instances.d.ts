@@ -32,6 +32,7 @@ export type YoutubeDLData = {
 
 export type ExtractOptions = {
   Proxy: String | undefined
+  BypassRatelimit: Boolean | undefined
   YTCookies: String | undefined
   YoutubeDLCookiesFilePath: String | undefined
 }

@@ -40,8 +40,9 @@ import { Extractor, StreamDownloader , HumanTimeConversion } from 'video-extract
 
 var Data = await Extractor(Url || 'Despacito', {
   Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
-  YTCookies: undefined,  //Youtube Cookies Value ( a very Big String here )
-  YoutubeDLCookiesFilePath: undefined //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
+  BypassRatelimit: undefined, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
+  YTCookies: undefined, //Youtube Cookies Value ( a very Big String here )
+  YoutubeDLCookiesFilePath: undefined, //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
 })
 var StreamData = await StreamDownloader(Url || 'Despacito')
 var HumanTime = HumanTimeConversion(MilliSeconds)
@@ -82,11 +83,28 @@ Data : {
   error: String | Error |  Error[]  | undefined
 }
 ```
+
 - `Cookies.txt File can be exported from "Cookies.txt" extension on chrome and netscape cookies file type is needed and only path to taht file is neeed for youtube-dl and for YT Cookies for YT Playlist , just give Cookies headers`
 - `Extractor() is same as StreamDownloader() but it will not download info related to Streams like - "stream","stream_type" and e.t.c , just the info about the Query`
 - `Data.tracks[0].stream can be used in terms of stream value in @discordjs/voice or any other Audio package .`
 - `Object can be seen undefined or undefined based on platform , like channelId and channel_url isn't present for facebook and soundcloud , But most usable stuff will be there for all shorts of Videos`
 - `Video-Extractor Supports Live Streams of Youtubes and you can stream for your discord.js/voice Audio Resource stream value`
+
+## Cookies.txt Info for youtube-dl
+
+```
+   How do I pass cookies to youtube-dl?
+       for example  /path/to/cookies/file.txt.  Note that  the
+       cookies  file  must  be  in Mozilla/Netscape format and the first line of the cookies file
+       must be either # HTTP Cookie File or  # Netscape HTTP Cookie File.   Make  sure  you  have
+       correct  newline  format  (https://en.wikipedia.org/wiki/Newline)  in the cookies file and
+       convert newlines if necessary to correspond with your OS, namely CRLF (\r\n) for  Windows,
+       LF  (\n)  for  Linux  and  CR  (\r)  for  Mac  OS.  HTTP Error 400: Bad Request when using
+       Cookies Options is a good sign of invalid newline format.
+
+       Passing cookies to youtube-dl is  a  good  way  to  workaround  login  when  a  particular
+       extractor  does  not  implement it explicitly.
+```
 
 ## Use-Case for @discordjs/voice Package
 
@@ -96,11 +114,12 @@ const { createAudioResource } = require('@discordjs/voice')
 
 const Data = await StreamDownloader('Despacito', {
   Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
-  YTCookies: undefined,  //Youtube Cookies Value ( a very Big String here )
-  YoutubeDLCookiesFilePath: undefined //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
+  BypassRatelimit: undefined, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
+  YTCookies: undefined, //Youtube Cookies Value ( a very Big String here )
+  YoutubeDLCookiesFilePath: undefined, //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
 })
 
-if(Data.error) throw error; 
+if(Data.error) throw error;
 
 var Audio_Resource = createAudioResource(Data.tracks[0].stream ,{
   inputType: Data.tracks[0].stream_type

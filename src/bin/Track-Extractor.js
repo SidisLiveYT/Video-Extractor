@@ -14,6 +14,7 @@ class YoutubeDLExtractor {
     Query,
     ExtractOptions = {
       Proxy: undefined,
+      BypassRatelimit: undefined,
       YTCookies: undefined,
       YoutubeDLCookiesFilePath: undefined,
     },
@@ -65,6 +66,7 @@ class YoutubeDLExtractor {
           noCallHome: true,
           noCheckCertificate: true,
           preferFreeFormats: true,
+          sleepInterval: 2,
           youtubeSkipDashManifest: true,
         },
         {
@@ -94,9 +96,9 @@ class YoutubeDLExtractor {
         : [];
       return ProcessedYoutubeDLTrack;
     } catch (error) {
-      if (SpecialPlaylistRequest) {
+      if (!ExtractOptions.BypassRatelimit || SpecialPlaylistRequest) {
         throw Error(
-          'Song has been Ratelimited | Please change Song Name or Url',
+          '[429] Song has been Ratelimited | Please change Song Name or Url',
         );
       }
       PostTrackName = SecretDepth === 0 ? Query : PostTrackName;
@@ -133,7 +135,7 @@ class YoutubeDLExtractor {
         o: '-',
         q: '',
         f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',
-        r: '100K',
+        r: '4.2M',
         ...ExtraCredentials,
       },
       {

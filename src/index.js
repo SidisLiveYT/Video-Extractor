@@ -1,7 +1,10 @@
 const SpotifyExtractor = require('./bin/Spotify-Resolver');
 const QueryResolver = require('./bin/Query-Resolver');
 const SoundCloudExtractor = require('./bin/SoundCloud-Resolver');
-const { YoutubeDLData, ExtractOptions } = require('../typings/instances-commonjs');
+const {
+  YoutubeDLData,
+  ExtractOptions,
+} = require('../typings/instances-commonjs');
 const { HumanTimeConversion } = require('./bin/Track-Extractor');
 
 /**
@@ -15,6 +18,7 @@ async function Extractor(
   Query = undefined,
   ExtractOptions = {
     Proxy: undefined,
+    BypassRatelimit: undefined,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
   },
@@ -46,6 +50,7 @@ async function StreamDownloader(
   Query = undefined,
   ExtractOptions = {
     Proxy: undefined,
+    BypassRatelimit: undefined,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
   },

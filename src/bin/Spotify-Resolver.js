@@ -5,6 +5,7 @@ async function SpotifyScrapper(
   Url,
   ExtractOptions = {
     Proxy: undefined,
+    BypassRatelimit: undefined,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
   },
@@ -61,6 +62,7 @@ async function SpotifyScrapper(
     SpotifyTrackRawData,
     ExtractOptions = {
       Proxy: undefined,
+      BypassRatelimit: undefined,
       YTCookies: undefined,
       YoutubeDLCookiesFilePath: undefined,
     },
