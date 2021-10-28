@@ -63,8 +63,7 @@
     "fs": "^0.0.1-security",
     "is-url": "^1.2.4",
     "play-dl": "^1.2.3",
-    "spotify-url-info": "^2.2.3",
-    "ytsr": "^3.5.3"
+    "spotify-url-info": "^2.2.3"
   },
   "directories": {
     "example": "example"
