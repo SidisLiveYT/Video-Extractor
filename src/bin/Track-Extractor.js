@@ -102,7 +102,13 @@ class YoutubeDLExtractor {
           '[429] Song has been Ratelimited | Please change Song Name or Url',
         );
       }
-      YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
+      if (
+        error
+        && (error.message.includes('429')
+          || error.message.includes('exit code 1')
+          || error.includes('429')
+          || error.includes('exit code 1'))
+      ) YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
       PostTrackName = SecretDepth === 0 ? Query : PostTrackName;
       const Value = (await search(Query, { limit: SecretDepth + 2 }))[
         SecretDepth + 1
