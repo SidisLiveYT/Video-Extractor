@@ -40,7 +40,7 @@ import { Extractor, StreamDownloader , HumanTimeConversion } from 'video-extract
 
 var Data = await Extractor(Url || 'Despacito', {
   Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
-  BypassRatelimit: undefined, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
+  BypassRatelimit: true, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
   YTCookies: undefined, //Youtube Cookies Value ( a very Big String here )
   YoutubeDLCookiesFilePath: undefined, //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
 })
@@ -114,7 +114,7 @@ const { createAudioResource } = require('@discordjs/voice')
 
 const Data = await StreamDownloader('Despacito', {
   Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
-  BypassRatelimit: undefined, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
+  BypassRatelimit: true, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
   YTCookies: undefined, //Youtube Cookies Value ( a very Big String here )
   YoutubeDLCookiesFilePath: undefined, //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
 })

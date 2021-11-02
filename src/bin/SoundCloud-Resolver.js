@@ -4,7 +4,7 @@ async function SoundCloudExtractor(
   Query,
   ExtractOptions = {
     Proxy: undefined,
-    BypassRatelimit: undefined,
+    BypassRatelimit: true,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
   },

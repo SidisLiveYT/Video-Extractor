@@ -15,7 +15,7 @@ class YoutubeDLExtractor {
     Query,
     ExtractOptions = {
       Proxy: undefined,
-      BypassRatelimit: undefined,
+      BypassRatelimit: true,
       YTCookies: undefined,
       YoutubeDLCookiesFilePath: undefined,
     },
@@ -137,7 +137,7 @@ class YoutubeDLExtractor {
         o: '-',
         q: '',
         f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',
-        r: '4.2M',
+        r: '4.5M',
         ...ExtraCredentials,
       },
       {

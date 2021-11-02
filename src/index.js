@@ -18,7 +18,7 @@ async function Extractor(
   Query = undefined,
   ExtractOptions = {
     Proxy: undefined,
-    BypassRatelimit: undefined,
+    BypassRatelimit: true,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
   },
@@ -50,7 +50,7 @@ async function StreamDownloader(
   Query = undefined,
   ExtractOptions = {
     Proxy: undefined,
-    BypassRatelimit: undefined,
+    BypassRatelimit: true,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
   },

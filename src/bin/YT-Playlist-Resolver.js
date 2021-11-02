@@ -6,7 +6,7 @@ class YTPlaylistParser {
     Url,
     ExtractOptions = {
       Proxy: undefined,
-      BypassRatelimit: undefined,
+      BypassRatelimit: true,
       YTCookies: undefined,
       YoutubeDLCookiesFilePath: undefined,
     },

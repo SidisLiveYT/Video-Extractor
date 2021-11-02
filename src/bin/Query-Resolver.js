@@ -6,7 +6,7 @@ async function QueryResolver(
   Query,
   ExtractOptions = {
     Proxy: undefined,
-    BypassRatelimit: undefined,
+    BypassRatelimit: true,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
   },
