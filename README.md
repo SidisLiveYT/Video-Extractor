@@ -150,4 +150,4 @@ Before creating an issue, please ensure that it hasn't already been reported/sug
 ## Help
 
 If you don't understand something in the ReadMe.md , you are experiencing problems, or you just need a gentle
-nudge in the right direction, please don't hesitate to join our official [Support Server](https://discord.gg/Vkmzffpjny).
+nudge in the right direction, please don't hesitate to join our official [Support Server](https://discord.gg/MfME24sJ2a).
