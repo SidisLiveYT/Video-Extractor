@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/nav.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/skyceil.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <h4><a href="index.html">Home</a></h4>
+</nav>
+
+<div id="main">
+    <div class="burger">
+        <div class="burger-line-1"></div>
+        <div class="burger-line-2"></div>
+        <div class="burger-line-3"></div>
+    </div>
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3>video-extractor 2.2.12</h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><div align="center">
+  <br />
+  <br />
+  <p>
+<h1>Video Extractor</h1>
+  </p>
+</div>
+<h2>About</h2>
+<p>Video Extractor is a Extractor/Scrapper/Downloader and Helps Players to fetch data from custom-youtube-dl or Custom Extractors , as Per reduces extra work and credentials.</p>
+<ul>
+<li>Supports Proxy , Cookies Headers for YT Playlists and Cookies.txt File for youtube-dl as ExtractorOptions</li>
+<li>Even Supports Youtube Live Streams to Stream on your Web Application(discord bots , html player and e.t.c)</li>
+<li>Object-oriented , means Value returned in a structure format</li>
+<li>Python Based Browser Extrator -&gt; Need to have Python installed in binary $PATH</li>
+<li>Supports 700+ Website's Urls and Even Youtube Search</li>
+<li>Delay/Buffer Timeout is max 3 seconds on tracks and 7 sec for Playlists</li>
+<li>Customisable Extractors</li>
+<li>Performant</li>
+<li>100% coverage of youtube-dl and custom extractors</li>
+</ul>
+<h2>Installation</h2>
+<p><strong>Node.js 16 or newer is required.</strong></p>
+<pre class="prettyprint source"><code>npm install video-extractor@latest
+</code></pre>
+<h2>Example usage</h2>
+<p>Extractor Video/Playlist/Album Data from any Platform :-</p>
+<pre class="prettyprint source"><code>const { Extractor , StreamDownloader , HumanTimeConversion } = require('video-extractor') //For CommonJS
+                            //OR
+import { Extractor, StreamDownloader , HumanTimeConversion } from 'video-extractor' //for ES6
+
+
+var Data = await Extractor(Url || 'Despacito', {
+  Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
+  BypassRatelimit: true, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
+  YTCookies: undefined, //Youtube Cookies Value ( a very Big String here )
+  YoutubeDLCookiesFilePath: undefined, //Fetch a Cookie.txt which is a Netscape Cookie File and give path file (&quot;./path/to/file&quot;) like this
+})
+var StreamData = await StreamDownloader(Url || 'Despacito')
+var HumanTime = HumanTimeConversion(MilliSeconds)
+
+</code></pre>
+<h2>Structure of Data/Track</h2>
+<pre class="prettyprint source"><code>Data : {
+  playlist : Boolean,
+  tracks : [
+    {
+      Id: 0,
+      url: String,
+      video_Id: String,
+      title: String,
+      author: String,
+      author_link: String,
+      description: String,
+      custom_extractor: `youtube-dl`,
+      duration: Number
+      human_duration: String,
+      stream: String,  // using StreamDownloader() will give &quot;stream Data&quot; or else undefined or 0
+      stream_type: String,
+      stream_duration: Number,
+      stream_video_Id: String,
+      stream_human_duration: Number,
+      orignal_extractor: 'youtube' | 'spotify' | 'facebook' | 'arbitrary',
+      thumbnail: String,
+      channelId: 0 || String,
+      channel_url: String,
+      likes: 0,
+      is_live: false,
+      dislikes: 0,
+    }
+  ],
+  error: String | Error |  Error[]  | undefined
+}
+</code></pre>
+<ul>
+<li><code>Cookies.txt File can be exported from &quot;Cookies.txt&quot; extension on chrome and netscape cookies file type is needed and only path to taht file is neeed for youtube-dl and for YT Cookies for YT Playlist , just give Cookies headers</code></li>
+<li><code>Extractor() is same as StreamDownloader() but it will not download info related to Streams like - &quot;stream&quot;,&quot;stream_type&quot; and e.t.c , just the info about the Query</code></li>
+<li><code>Data.tracks[0].stream can be used in terms of stream value in @discordjs/voice or any other Audio package .</code></li>
+<li><code>Object can be seen undefined or undefined based on platform , like channelId and channel_url isn't present for facebook and soundcloud , But most usable stuff will be there for all shorts of Videos</code></li>
+<li><code>Video-Extractor Supports Live Streams of Youtubes and you can stream for your discord.js/voice Audio Resource stream value</code></li>
+</ul>
+<h2>Cookies.txt Info for youtube-dl</h2>
+<pre class="prettyprint source"><code>   How do I pass cookies to youtube-dl?
+       for example  /path/to/cookies/file.txt.  Note that  the
+       cookies  file  must  be  in Mozilla/Netscape format and the first line of the cookies file
+       must be either # HTTP Cookie File or  # Netscape HTTP Cookie File.   Make  sure  you  have
+       correct  newline  format  (https://en.wikipedia.org/wiki/Newline)  in the cookies file and
+       convert newlines if necessary to correspond with your OS, namely CRLF (\r\n) for  Windows,
+       LF  (\n)  for  Linux  and  CR  (\r)  for  Mac  OS.  HTTP Error 400: Bad Request when using
+       Cookies Options is a good sign of invalid newline format.
+
+       Passing cookies to youtube-dl is  a  good  way  to  workaround  login  when  a  particular
+       extractor  does  not  implement it explicitly.
+</code></pre>
+<h2>Use-Case for @discordjs/voice Package</h2>
+<pre class="prettyprint source"><code>const { StreamDownloader } = require('video-extractor')
+const { createAudioResource } = require('@discordjs/voice')
+
+const Data = await StreamDownloader('Despacito', {
+  Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
+  BypassRatelimit: true, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
+  YTCookies: undefined, //Youtube Cookies Value ( a very Big String here )
+  YoutubeDLCookiesFilePath: undefined, //Fetch a Cookie.txt which is a Netscape Cookie File and give path file (&quot;./path/to/file&quot;) like this
+})
+
+if(Data.error) throw error;
+
+var Audio_Resource = createAudioResource(Data.tracks[0].stream ,{
+  inputType: Data.tracks[0].stream_type
+})
+
+
+/*
+
+- Rest is mentioned in @discordjs/voice examples , from here &quot;Audio_Resource&quot; is important
+- Extractor() is same as StreamDownloader() but it will not download info related to Streams like - &quot;stream&quot;,&quot;stream_type&quot; and e.t.c , just the info about the Query
+
+*/
+
+</code></pre>
+<h2>Links</h2>
+<ul>
+<li><a href="https://www.npmjs.com/package/@sidislive/youtube-dl-exec">Youtube-dl</a></li>
+<li><a href="https://github.com/SidisLiveYT/Video-Extractor.git">Source Code</a></li>
+<li><a href="https://github.com/SidisLiveYT/Video-Extractor">GitHub Repo Link</a></li>
+<li><a href="https://www.npmjs.com/package/video-extractor">NPM Package</a></li>
+<li><a href="https://yarn.pm/video-extractor">Yarn Package</a></li>
+</ul>
+<h2>Contributing</h2>
+<p>Before creating an issue, please ensure that it hasn't already been reported/suggested, and double-check the ReadMe.md</p>
+<h2>Help</h2>
+<p>If you don't understand something in the ReadMe.md , you are experiencing problems, or you just need a gentle
+nudge in the right direction, please don't hesitate to join our official <a href="https://discord.gg/MfME24sJ2a">Support Server</a>.</p></article>
+    </section>
+
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Tue Nov 09 2021 14:15:52 GMT+0000 (Coordinated Universal Time) using <a href="https://github.com/zyrouge/jsdoc-skyceil">Skyceil Theme</a>
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+</body>
+</html>
