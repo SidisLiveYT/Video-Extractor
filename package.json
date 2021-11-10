@@ -1,6 +1,6 @@
 {
   "name": "video-extractor",
-  "version": "2.2.13",
+  "version": "2.2.14",
   "description": "Video Extractor supports youtube-dl stream download for @discordjs/voice Audio Resource , for other Strean packages or functions as it will return a stream and its type",
   "main": "./src/index.js",
   "module": "./src/index.mjs",
