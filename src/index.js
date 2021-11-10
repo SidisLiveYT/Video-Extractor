@@ -72,8 +72,21 @@ async function StreamDownloader(
   return await QueryResolver(Query, ExtractOptions, true);
 }
 function Filteration(DataStructure) {
-  if (DataStructure && DataStructure.tracks && DataStructure.tracks[0]) DataStructure.tracks = DataStructure.tracks.filter(Boolean);
-
+  DataStructure.tracks = DataStructure.tracks.map((track) => {
+    if (track.track) return track.track;
+    return track;
+  });
+  DataStructure.error = DataStructure.tracks.map((track) => {
+    if (track.error) return track.error;
+    return undefined;
+  });
+  if (DataStructure && DataStructure.tracks && DataStructure.tracks[0]) {
+    DataStructure.tracks = DataStructure.tracks.filter(Boolean);
+    DataStructure.error = DataStructure.error.filter(Boolean);
+  }
+  DataStructure.error = DataStructure.error[1]
+    ? DataStructure.error
+    : DataStructure.error[0];
   return DataStructure;
 }
 

@@ -133,35 +133,57 @@ class YoutubeDLExtractor {
     }
   }
 
-  static #streamextractor(Url) {
-    const ExtraCredentials = {};
-    if (YoutubeDLExtractor.#Proxy) ExtraCredentials.proxy = YoutubeDLExtractor.#Proxy;
-    if (YoutubeDLExtractor.#YoutubeDLCookiesFilePath) ExtraCredentials.cookies = YoutubeDLExtractor.#YoutubeDLCookiesFilePath;
-    const YoutubeDLProcess = YoutubeDL.raw(
-      Url,
-      {
-        o: '-',
-        q: '',
-        f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',
-        r: '4.5M',
-        ...ExtraCredentials,
-      },
-      {
-        stdio: ['ignore', 'pipe', 'ignore'],
-      },
-    );
+  static async #streamextractor(Url, SecretDepth = 0) {
+    try {
+      const ExtraCredentials = {};
+      if (YoutubeDLExtractor.#Proxy) ExtraCredentials.proxy = YoutubeDLExtractor.#Proxy;
+      if (YoutubeDLExtractor.#YoutubeDLCookiesFilePath) ExtraCredentials.cookies = YoutubeDLExtractor.#YoutubeDLCookiesFilePath;
+      const YoutubeDLProcess = YoutubeDL.raw(
+        Url,
+        {
+          o: '-',
+          q: '',
+          f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',
+          r: '3.5M',
+          ...ExtraCredentials,
+        },
+        {
+          stdio: ['ignore', 'pipe', 'ignore'],
+        },
+      );
 
-    if (!YoutubeDLProcess.stdout) return void undefined;
-    const stream = YoutubeDLProcess.stdout;
+      if (!YoutubeDLProcess.stdout) return void undefined;
+      const stream = YoutubeDLProcess.stdout;
 
-    stream.on('error', () => {
-      if (!YoutubeDLProcess.killed) YoutubeDLProcess.kill();
-      stream.resume();
-    });
-    return stream;
+      stream.on('error', () => {
+        if (!YoutubeDLProcess.killed) YoutubeDLProcess.kill();
+        stream.resume();
+      });
+      return stream;
+    } catch (error) {
+      let StreamData;
+      if (
+        error
+        && (`${error.message}`.includes('429')
+          || `${error.message}`.includes('exit code 1')
+          || `${error}`.includes('429')
+          || `${error}`.includes('exit code 1'))
+      ) {
+        YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
+        StreamData = await YoutubeDLExtractor.streamextractor(
+          Url,
+          ++SecretDepth,
+        );
+      }
+      if (SecretDepth !== 0) return StreamData;
+      return {
+        stream: StreamData,
+        error: error.message ?? `${error}`,
+      };
+    }
   }
 
-  static async #YoutubeStreamDownload(Url) {
+  static async #YoutubeStreamDownload(Url, SecretDepth = 0) {
     try {
       const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/;
       if (!Url) return undefined;
@@ -174,6 +196,7 @@ class YoutubeDLExtractor {
       });
       return SourceStream;
     } catch (error) {
+      let StreamData;
       if (
         error
         && (`${error.message}`.includes('429')
@@ -188,10 +211,17 @@ class YoutubeDLExtractor {
           || `${error}`.includes('ratelimit'))
       ) {
         YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
-        return YoutubeDLExtractor.#YoutubeStreamDownload(Url);
+        StreamData = YoutubeDLExtractor.#YoutubeStreamDownload(
+          Url,
+          ++SecretDepth,
+        );
       }
+      if (SecretDepth !== 0) return StreamData;
 
-      throw Error(`${error.message ?? error}`);
+      return {
+        stream: StreamData,
+        error: error.message ?? `${error}`,
+      };
     }
   }
 
@@ -201,7 +231,7 @@ class YoutubeDLExtractor {
     ExtraValue = {},
     StreamValueRecordBoolean = undefined,
   ) {
-    const YoutubeSourceStreamData = StreamValueRecordBoolean
+    let YoutubeSourceStreamData = StreamValueRecordBoolean
       ? YoutubeDLRawData.is_live
         || (YoutubeDLRawData.entries
           && YoutubeDLRawData.entries[0]
@@ -233,6 +263,61 @@ class YoutubeDLExtractor {
         ? YoutubeDLRawData.entries[0].extractor_key
         : undefined)
       ?? undefined;
+
+    const FetchedStreamData = StreamValueRecordBoolean
+      ? (YoutubeSourceStreamData
+        ? YoutubeSourceStreamData.streamdatas ?? YoutubeSourceStreamData
+        : undefined)
+        ?? (await YoutubeDLExtractor.#streamextractor(
+          (!YoutubeDLRawData.extractor.includes('search')
+            ? YoutubeDLRawData.video_url
+              ?? YoutubeDLRawData.webpage_url
+              ?? undefined
+            : undefined)
+            ?? (YoutubeDLRawData.entries
+            && YoutubeDLRawData.entries[0]
+            && YoutubeDLRawData.entries[0].webpage_url
+              ? YoutubeDLRawData.entries[0].video_url
+                ?? YoutubeDLRawData.entries[0].webpage_url
+                ?? undefined
+              : undefined)
+            ?? ExtraValue.url
+            ?? undefined,
+        ))
+        ?? ExtraValue.stream_url
+        ?? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
+          ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format.includes('audio')).url
+          : undefined)
+        ?? (YoutubeDLRawData.requested_formats
+        && YoutubeDLRawData.requested_formats[0]
+          ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
+          : undefined)
+        ?? (YoutubeDLRawData.entries
+        && YoutubeDLRawData.entries[0]
+        && YoutubeDLRawData.entries[0].formats
+        && YoutubeDLRawData.entries[0].requested_formats[0]
+          ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format.includes('audio')).url
+          : undefined)
+        ?? (YoutubeDLRawData.entries
+        && YoutubeDLRawData.entries[0]
+        && YoutubeDLRawData.entries[0].requested_formats
+        && YoutubeDLRawData.entries[0].requested_formats[0]
+          ? YoutubeDLRawData.entries[0].requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
+          : undefined)
+        ?? undefined
+      : undefined;
+
+    const ErrorDatas = (YoutubeSourceStreamData && YoutubeSourceStreamData.streamdatas
+      ? YoutubeSourceStreamData.error
+      : undefined)
+      ?? (FetchedStreamData && FetchedStreamData.streamdatas
+        ? FetchedStreamData.error
+        : undefined);
+
+    YoutubeSourceStreamData = YoutubeSourceStreamData && YoutubeSourceStreamData.streamdatas
+      ? YoutubeSourceStreamData.streamdatas
+      : YoutubeSourceStreamData;
+
     const track = {
       Id: 0,
       url:
@@ -361,48 +446,10 @@ class YoutubeDLExtractor {
           ? YoutubeDLRawData.entries[0].requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
           : undefined)
         ?? undefined,
-      stream: StreamValueRecordBoolean
-        ? (YoutubeSourceStreamData
-          ? YoutubeSourceStreamData.stream
-          : undefined)
-          ?? YoutubeDLExtractor.#streamextractor(
-            (!YoutubeDLRawData.extractor.includes('search')
-              ? YoutubeDLRawData.video_url
-                ?? YoutubeDLRawData.webpage_url
-                ?? undefined
-              : undefined)
-              ?? (YoutubeDLRawData.entries
-              && YoutubeDLRawData.entries[0]
-              && YoutubeDLRawData.entries[0].webpage_url
-                ? YoutubeDLRawData.entries[0].video_url
-                  ?? YoutubeDLRawData.entries[0].webpage_url
-                  ?? undefined
-                : undefined)
-              ?? ExtraValue.url
-              ?? undefined,
-          )
-          ?? ExtraValue.stream_url
-          ?? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
-            ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format.includes('audio')).url
-            : undefined)
-          ?? (YoutubeDLRawData.requested_formats
-          && YoutubeDLRawData.requested_formats[0]
-            ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
-            : undefined)
-          ?? (YoutubeDLRawData.entries
-          && YoutubeDLRawData.entries[0]
-          && YoutubeDLRawData.entries[0].formats
-          && YoutubeDLRawData.entries[0].requested_formats[0]
-            ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format.includes('audio')).url
-            : undefined)
-          ?? (YoutubeDLRawData.entries
-          && YoutubeDLRawData.entries[0]
-          && YoutubeDLRawData.entries[0].requested_formats
-          && YoutubeDLRawData.entries[0].requested_formats[0]
-            ? YoutubeDLRawData.entries[0].requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
-            : undefined)
-          ?? undefined
-        : undefined,
+      stream:
+        FetchedStreamData && FetchedStreamData.streamdatas
+          ? FetchedStreamData.streamdatas
+          : FetchedStreamData,
       stream_type: StreamValueRecordBoolean
         ? YoutubeSourceStreamData
           ? YoutubeSourceStreamData.type
@@ -517,7 +564,11 @@ class YoutubeDLExtractor {
           : undefined)
         ?? 0,
     };
-    return track;
+
+    return {
+      track,
+      error: ErrorDatas ? `${ErrorDatas}` : undefined,
+    };
   }
 
   static HumanTimeConversion(DurationMilliSeconds = 0) {
