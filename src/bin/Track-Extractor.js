@@ -571,11 +571,12 @@ class YoutubeDLExtractor {
           : undefined)
         ?? 0,
     };
-
-    return {
-      track,
-      error: ErrorDatas ? `${ErrorDatas}` : undefined,
-    };
+    if (ErrorDatas) {
+      return {
+        track,
+        error: `${ErrorDatas}`,
+      };
+    } return track;
   }
 
   static HumanTimeConversion(DurationMilliSeconds = 0) {
