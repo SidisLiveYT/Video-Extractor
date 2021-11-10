@@ -69,7 +69,7 @@ async function StreamDownloader(
       ),
     );
   }
-  return await QueryResolver(Query, ExtractOptions, true);
+  return Filteration(await QueryResolver(Query, ExtractOptions, true));
 }
 function Filteration(DataStructure) {
   DataStructure.tracks = DataStructure.tracks.map((track) => {
