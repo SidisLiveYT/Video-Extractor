@@ -166,21 +166,21 @@ class YoutubeDLExtractor {
       });
       return stream;
     } catch (error) {
-      if (SecretDepth > 10) return void null;
-      let StreamData;
+      if (SecretDepth > 3) throw Error(`${error.message ?? error}`);
       if (
         error
-        && (`${error.message}`.includes('429')
+        && !(
+          `${error.message}`.includes('429')
           || `${error.message}`.includes('exit code 1')
           || `${error}`.includes('429')
-          || `${error}`.includes('exit code 1'))
+          || `${error}`.includes('exit code 1')
+        )
       ) {
-        YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
-        StreamData = await YoutubeDLExtractor.streamextractor(
-          Url,
-          ++SecretDepth,
-        );
+        throw Error(`${error.message ?? error}`);
       }
+      YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
+      const StreamData = await YoutubeDLExtractor.streamextractor(Url, ++SecretDepth);
+
       if (SecretDepth !== 0) return StreamData;
       return {
         stream: StreamData,
@@ -202,27 +202,30 @@ class YoutubeDLExtractor {
       });
       return SourceStream;
     } catch (error) {
-      if (SecretDepth > 10) return void null;
-      let StreamData;
+      if (SecretDepth >= 3) throw Error(`${error.message ?? error}`);
       if (
         error
-        && (`${error.message}`.includes('429')
+        && !(
+          `${error.message}`.includes('429')
           || `${error.message}`.includes('exit code 1')
           || `${error.message}`.includes('Ratelimit')
           || `${error.message}`.includes('ratelimit')
           || `${error.message}`.includes('unavaliable')
+          || `${error.message}`.includes('Unavaliable')
           || `${error}`.includes('429')
           || `${error}`.includes('unavaliable')
           || `${error}`.includes('exit code 1')
           || `${error}`.includes('Ratelimit')
-          || `${error}`.includes('ratelimit'))
+          || `${error}`.includes('ratelimit')
+          || `${error}`.includes('Unavaliable')
+        )
       ) {
-        YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
-        StreamData = YoutubeDLExtractor.#YoutubeStreamDownload(
-          Url,
-          ++SecretDepth,
-        );
+        throw Error(`${error.message ?? error}`);
       }
+
+      YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
+      const StreamData = YoutubeDLExtractor.#YoutubeStreamDownload(Url, ++SecretDepth);
+
       if (SecretDepth !== 0) return StreamData;
 
       return {
@@ -576,7 +579,8 @@ class YoutubeDLExtractor {
         track,
         error: `${ErrorDatas}`,
       };
-    } return track;
+    }
+    return track;
   }
 
   static HumanTimeConversion(DurationMilliSeconds = 0) {
