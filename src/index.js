@@ -76,13 +76,18 @@ function Filteration(DataStructure) {
     if (track.track) return track.track;
     return track;
   });
-  DataStructure.error = DataStructure.tracks.map((track) => {
-    if (track.error) return track.error;
-    return undefined;
-  });
+  DataStructure.error = DataStructure
+    && DataStructure.tracks
+    && DataStructure.tracks[0]
+    && DataStructure.tracks[0].error
+    ? DataStructure.tracks.map((track) => {
+      if (track.error) return track.error;
+      return undefined;
+    })
+    : DataStructure.error;
   if (DataStructure && DataStructure.tracks && DataStructure.tracks[0]) {
     DataStructure.tracks = DataStructure.tracks.filter(Boolean);
-    DataStructure.error = DataStructure.error.filter(Boolean);
+    DataStructure.error = DataStructure.error && DataStructure.error[0] ? DataStructure.error.filter(Boolean) : DataStructure.error;
   }
   DataStructure.error = DataStructure.error[1]
     ? DataStructure.error
