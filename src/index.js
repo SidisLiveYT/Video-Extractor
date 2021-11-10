@@ -89,9 +89,6 @@ function Filteration(DataStructure) {
     DataStructure.tracks = DataStructure.tracks.filter(Boolean);
     DataStructure.error = DataStructure.error && DataStructure.error[0] ? DataStructure.error.filter(Boolean) : DataStructure.error;
   }
-  DataStructure.error = DataStructure.error[1]
-    ? DataStructure.error
-    : DataStructure.error[0];
   return DataStructure;
 }
 
