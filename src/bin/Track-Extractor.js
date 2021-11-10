@@ -97,6 +97,11 @@ class YoutubeDLExtractor {
         : [];
       return ProcessedYoutubeDLTrack;
     } catch (error) {
+      if (SecretDepth > 15) {
+        throw Error(
+          '[429] Song has been Ratelimited | Please change Song Name or Url',
+        );
+      }
       if (!ExtractOptions.BypassRatelimit || SpecialPlaylistRequest) {
         throw Error(
           '[429] Song has been Ratelimited | Please change Song Name or Url',
@@ -161,6 +166,7 @@ class YoutubeDLExtractor {
       });
       return stream;
     } catch (error) {
+      if (SecretDepth > 10) return void null;
       let StreamData;
       if (
         error
@@ -196,6 +202,7 @@ class YoutubeDLExtractor {
       });
       return SourceStream;
     } catch (error) {
+      if (SecretDepth > 10) return void null;
       let StreamData;
       if (
         error
