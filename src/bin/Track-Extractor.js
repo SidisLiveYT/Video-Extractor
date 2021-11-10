@@ -162,12 +162,37 @@ class YoutubeDLExtractor {
   }
 
   static async #YoutubeStreamDownload(Url) {
-    const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/;
-    if (!Url) return undefined;
-    if (!Url.match(YoutubeUrlRegex)) return undefined;
+    try {
+      const YoutubeUrlRegex = /^.*(youtu.be\/|list=|watch=|v=)([^#\&\?]*).*/;
+      if (!Url) return undefined;
+      if (!Url.match(YoutubeUrlRegex)) return undefined;
 
-    const SourceStream = await stream(Url);
-    return SourceStream;
+      const SourceStream = await stream(Url, {
+        proxy: YoutubeDLExtractor.#Proxy
+          ? [YoutubeDLExtractor.#Proxy]
+          : undefined,
+      });
+      return SourceStream;
+    } catch (error) {
+      if (
+        error
+        && (`${error.message}`.includes('429')
+          || `${error.message}`.includes('exit code 1')
+          || `${error.message}`.includes('Ratelimit')
+          || `${error.message}`.includes('ratelimit')
+          || `${error.message}`.includes('unavaliable')
+          || `${error}`.includes('429')
+          || `${error}`.includes('unavaliable')
+          || `${error}`.includes('exit code 1')
+          || `${error}`.includes('Ratelimit')
+          || `${error}`.includes('ratelimit'))
+      ) {
+        YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
+        return YoutubeDLExtractor.#YoutubeStreamDownload(Url);
+      }
+
+      throw Error(`${error.message ?? error}`);
+    }
   }
 
   static async #YoutubeDLTrackModel(
@@ -341,20 +366,20 @@ class YoutubeDLExtractor {
           ? YoutubeSourceStreamData.stream
           : undefined)
           ?? YoutubeDLExtractor.#streamextractor(
-            !YoutubeDLRawData.extractor.includes('search')
+            (!YoutubeDLRawData.extractor.includes('search')
               ? YoutubeDLRawData.video_url
-                  ?? YoutubeDLRawData.webpage_url
+                ?? YoutubeDLRawData.webpage_url
+                ?? undefined
+              : undefined)
+              ?? (YoutubeDLRawData.entries
+              && YoutubeDLRawData.entries[0]
+              && YoutubeDLRawData.entries[0].webpage_url
+                ? YoutubeDLRawData.entries[0].video_url
+                  ?? YoutubeDLRawData.entries[0].webpage_url
                   ?? undefined
-              : undefined
-                  ?? (YoutubeDLRawData.entries
-                  && YoutubeDLRawData.entries[0]
-                  && YoutubeDLRawData.entries[0].webpage_url
-                    ? YoutubeDLRawData.entries[0].video_url
-                      ?? YoutubeDLRawData.entries[0].webpage_url
-                      ?? undefined
-                    : undefined)
-                  ?? ExtraValue.url
-                  ?? undefined,
+                : undefined)
+              ?? ExtraValue.url
+              ?? undefined,
           )
           ?? ExtraValue.stream_url
           ?? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
