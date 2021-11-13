@@ -6,6 +6,7 @@ const {
   ExtractOptions,
 } = require('../typings/instances-commonjs');
 const { HumanTimeConversion } = require('./bin/Track-Extractor');
+const { GetLyrics } = require('./bin/Lyrics-Extractor');
 
 /**
  * @function Extractor Youtube-DL Extractor for Music Players Node.jsv16
@@ -92,4 +93,6 @@ function Filteration(DataStructure) {
   return DataStructure;
 }
 
-module.exports = { Extractor, StreamDownloader, HumanTimeConversion };
+module.exports = {
+  Extractor, StreamDownloader, HumanTimeConversion, GetLyrics,
+};

@@ -67,6 +67,7 @@ Data : {
       duration: Number
       human_duration: String,
       stream: String,  // using StreamDownloader() will give "stream Data" or else undefined or 0
+      stream_url: String,
       stream_type: String,
       stream_duration: Number,
       stream_video_Id: String,
@@ -75,6 +76,7 @@ Data : {
       thumbnail: String,
       channelId: 0 || String,
       channel_url: String,
+      lyrics: String,
       likes: 0,
       is_live: false,
       dislikes: 0,

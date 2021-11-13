@@ -10,7 +10,8 @@ export type YoutubeDLTrack = {
   duration: Number
   human_duration: String
   preview_stream_url: String
-  stream: String
+  stream: String | 'Socket'
+  stream_url: String
   stream_type: String
   stream_duration: Number
   stream_video_Id: String
@@ -19,6 +20,7 @@ export type YoutubeDLTrack = {
   thumbnail: String
   channelId: String | Number
   channel_url: String
+  lyrics: String
   likes: Number
   is_live: Boolean
   dislikes: Number

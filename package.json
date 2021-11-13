@@ -1,6 +1,6 @@
 {
   "name": "video-extractor",
-  "version": "2.2.14",
+  "version": "2.3.0",
   "description": "Video Extractor supports youtube-dl stream download for @discordjs/voice Audio Resource , for other Strean packages or functions as it will return a stream and its type",
   "main": "./src/index.js",
   "module": "./src/index.mjs",
@@ -65,8 +65,9 @@
   "dependencies": {
     "@sidislive/youtube-dl-exec": "^1.0.2",
     "fs": "^0.0.1-security",
+    "genius-lyrics": "^4.3.4",
     "is-url": "^1.2.4",
-    "play-dl": "^1.2.8",
+    "play-dl": "^1.2.9",
     "proxies-generator": "^1.0.5",
     "spotify-url-info": "^2.2.3"
   },

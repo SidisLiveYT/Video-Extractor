@@ -4,3 +4,4 @@ export default YoutubeDLDownloader
 export const StreamDownloader = YoutubeDLDownloader.StreamDownloader
 export const Extractor = YoutubeDLDownloader.Extractor
 export const HumanTimeConversion = YoutubeDLDownloader.HumanTimeConversion
+export const GetLyrics = YoutubeDLDownloader.GetLyrics

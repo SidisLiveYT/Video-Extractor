@@ -3,6 +3,7 @@ const isUrl = require('is-url');
 const { stream, setToken, search } = require('play-dl');
 const { randomOne } = require('proxies-generator');
 const fs = require('fs');
+const { GetLyrics } = require('./Lyrics-Extractor');
 
 class YoutubeDLExtractor {
   static #Proxy = undefined;
@@ -179,7 +180,10 @@ class YoutubeDLExtractor {
         throw Error(`${error.message ?? error}`);
       }
       YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
-      const StreamData = await YoutubeDLExtractor.streamextractor(Url, ++SecretDepth);
+      const StreamData = await YoutubeDLExtractor.streamextractor(
+        Url,
+        ++SecretDepth,
+      );
 
       if (SecretDepth !== 0) return StreamData;
       return {
@@ -224,7 +228,10 @@ class YoutubeDLExtractor {
       }
 
       YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
-      const StreamData = YoutubeDLExtractor.#YoutubeStreamDownload(Url, ++SecretDepth);
+      const StreamData = YoutubeDLExtractor.#YoutubeStreamDownload(
+        Url,
+        ++SecretDepth,
+      );
 
       if (SecretDepth !== 0) return StreamData;
 
@@ -262,7 +269,6 @@ class YoutubeDLExtractor {
         )
         : undefined
       : undefined;
-
     extractor = extractor
       ?? YoutubeDLRawData.extractor
       ?? YoutubeDLRawData.extractor_key
@@ -460,6 +466,28 @@ class YoutubeDLExtractor {
         FetchedStreamData && FetchedStreamData.streamdatas
           ? FetchedStreamData.streamdatas
           : FetchedStreamData,
+      stream_url: StreamValueRecordBoolean
+        ? (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
+          ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format.includes('audio')).url
+          : undefined)
+          ?? (YoutubeDLRawData.requested_formats
+          && YoutubeDLRawData.requested_formats[0]
+            ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
+            : undefined)
+          ?? (YoutubeDLRawData.entries
+          && YoutubeDLRawData.entries[0]
+          && YoutubeDLRawData.entries[0].formats
+          && YoutubeDLRawData.entries[0].requested_formats[0]
+            ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format.includes('audio')).url
+            : undefined)
+          ?? (YoutubeDLRawData.entries
+          && YoutubeDLRawData.entries[0]
+          && YoutubeDLRawData.entries[0].requested_formats
+          && YoutubeDLRawData.entries[0].requested_formats[0]
+            ? YoutubeDLRawData.entries[0].requested_formats.find((rqformat) => rqformat.format.includes('audio')).url
+            : undefined)
+          ?? undefined
+        : undefined,
       stream_type: StreamValueRecordBoolean
         ? YoutubeSourceStreamData
           ? YoutubeSourceStreamData.type
@@ -552,6 +580,27 @@ class YoutubeDLExtractor {
           ? YoutubeDLRawData.entries[0].channel_url
           : undefined)
         ?? undefined,
+      lyrics: !(
+        ExtraValue.is_live
+        ?? YoutubeDLRawData.is_live
+        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+          ? YoutubeDLRawData.entries[0].is_live
+          : undefined)
+        ?? false
+      )
+        ? await GetLyrics(
+          ExtraValue.title
+              ?? YoutubeDLRawData.track
+              ?? YoutubeDLRawData.title
+              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                ? YoutubeDLRawData.entries[0].title
+                : undefined)
+              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                ? YoutubeDLRawData.entries[0].track
+                : undefined)
+              ?? undefined,
+        )
+        : undefined,
       likes:
         ExtraValue.likes
         ?? YoutubeDLRawData.like_count
