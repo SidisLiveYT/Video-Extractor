@@ -150,7 +150,7 @@ class YoutubeDLExtractor {
           o: '-',
           q: '',
           f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',
-          r: '3.5M',
+          r: '5.6M',
           ...ExtraCredentials,
         },
         {
