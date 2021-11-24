@@ -98,7 +98,7 @@ class YoutubeDLExtractor {
         : [];
       return ProcessedYoutubeDLTrack;
     } catch (error) {
-      if (SecretDepth > 15) {
+      if (SecretDepth > 10) {
         throw Error(
           '[429] Song has been Ratelimited | Please change Song Name or Url',
         );
@@ -116,8 +116,9 @@ class YoutubeDLExtractor {
           || `${error}`.includes('exit code 1'))
       ) YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
       PostTrackName = SecretDepth === 0 ? Query : PostTrackName;
+      ++SecretDepth;
       const Value = (await search(Query, { limit: SecretDepth + 2 }))[
-        SecretDepth + 1
+        SecretDepth
       ];
       if (!Value || (Value && !Value.title)) throw new Error(`[429] Song - "${PostTrackName}" got Ratelimited`);
       const Song = await YoutubeDLExtractor.YoutubeDLExtraction(
@@ -127,7 +128,7 @@ class YoutubeDLExtractor {
         ExtraValue,
         null,
         true,
-        SecretDepth + 1,
+        SecretDepth,
         PostTrackName,
       );
       if (SecretDepth !== 0) return Song;
@@ -150,7 +151,7 @@ class YoutubeDLExtractor {
           o: '-',
           q: '',
           f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',
-          r: '5.6M',
+          r: '6.9M',
           ...ExtraCredentials,
         },
         {

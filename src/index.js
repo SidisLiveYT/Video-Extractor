@@ -73,6 +73,7 @@ async function StreamDownloader(
   return Filteration(await QueryResolver(Query, ExtractOptions, true));
 }
 function Filteration(DataStructure) {
+  DataStructure.tracks = DataStructure.tracks[0] ? DataStructure.tracks : [DataStructure.tracks];
   DataStructure.tracks = DataStructure.tracks.map((track) => {
     if (track.track) return track.track;
     return track;
