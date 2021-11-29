@@ -494,52 +494,17 @@ class YoutubeDLExtractor {
           ? YoutubeSourceStreamData.type
           : undefined ?? undefined
         : undefined,
-      stream_duration: (
-        YoutubeDLRawData.extractor
-        ?? YoutubeDLRawData.extractor_key
-        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-          ? YoutubeDLRawData.entries[0].extractor
-          : undefined)
-        ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-          ? YoutubeDLRawData.entries[0].extractor_key
-          : undefined)
-        ?? undefined
-      ).includes('youtube')
-        ? (YoutubeDLRawData.duration
-            ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-              ? YoutubeDLRawData.entries[0].duration
-              : undefined)
-            ?? 0) * 1000
-        : YoutubeDLRawData.duration
-          ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-            ? YoutubeDLRawData.entries[0].duration
-            : undefined)
-          ?? 0,
-
-      stream_video_Id:
-        (YoutubeDLRawData.display_id
-        ?? (YoutubeDLRawData.display_id
-          && !YoutubeDLRawData.extractor.includes('search'))
-          ? YoutubeDLRawData.display_id
-          : undefined)
-        ?? (YoutubeDLRawData.entries
-        && YoutubeDLRawData.entries[0]
-        && YoutubeDLRawData.entries[0].display_id
-          ? YoutubeDLRawData.entries[0].display_id
-            ?? YoutubeDLRawData.entries[0].id
-          : undefined)
-        ?? undefined,
-      stream_human_duration: YoutubeDLExtractor.HumanTimeConversion(
-        (
+      stream_duration: StreamValueRecordBoolean
+        ? (
           YoutubeDLRawData.extractor
-          ?? YoutubeDLRawData.extractor_key
-          ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-            ? YoutubeDLRawData.entries[0].extractor
-            : undefined)
-          ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-            ? YoutubeDLRawData.entries[0].extractor_key
-            : undefined)
-          ?? undefined
+            ?? YoutubeDLRawData.extractor_key
+            ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+              ? YoutubeDLRawData.entries[0].extractor
+              : undefined)
+            ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+              ? YoutubeDLRawData.entries[0].extractor_key
+              : undefined)
+            ?? undefined
         ).includes('youtube')
           ? (YoutubeDLRawData.duration
               ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
@@ -547,11 +512,51 @@ class YoutubeDLExtractor {
                 : undefined)
               ?? 0) * 1000
           : YoutubeDLRawData.duration
+            ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+              ? YoutubeDLRawData.entries[0].duration
+              : undefined)
+            ?? 0
+        : 0,
+
+      stream_video_Id: StreamValueRecordBoolean
+        ? (YoutubeDLRawData.display_id
+          ?? (YoutubeDLRawData.display_id
+            && !YoutubeDLRawData.extractor.includes('search'))
+          ? YoutubeDLRawData.display_id
+          : undefined)
+          ?? (YoutubeDLRawData.entries
+          && YoutubeDLRawData.entries[0]
+          && YoutubeDLRawData.entries[0].display_id
+            ? YoutubeDLRawData.entries[0].display_id
+              ?? YoutubeDLRawData.entries[0].id
+            : undefined)
+          ?? undefined
+        : undefined,
+      stream_human_duration: StreamValueRecordBoolean
+        ? YoutubeDLExtractor.HumanTimeConversion(
+          (
+            YoutubeDLRawData.extractor
+              ?? YoutubeDLRawData.extractor_key
               ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
-                ? YoutubeDLRawData.entries[0].duration
+                ? YoutubeDLRawData.entries[0].extractor
                 : undefined)
-              ?? 0,
-      ),
+              ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                ? YoutubeDLRawData.entries[0].extractor_key
+                : undefined)
+              ?? undefined
+          ).includes('youtube')
+            ? (YoutubeDLRawData.duration
+                  ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                    ? YoutubeDLRawData.entries[0].duration
+                    : undefined)
+                  ?? 0) * 1000
+            : YoutubeDLRawData.duration
+                  ?? (YoutubeDLRawData.entries && YoutubeDLRawData.entries[0]
+                    ? YoutubeDLRawData.entries[0].duration
+                    : undefined)
+                  ?? 0,
+        )
+        : undefined,
       orignal_extractor: extractor ?? 'arbitrary',
       thumbnail:
         ExtraValue.thumbnail
