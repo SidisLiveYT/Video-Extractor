@@ -9,6 +9,7 @@ class YTPlaylistParser {
       BypassRatelimit: true,
       YTCookies: undefined,
       YoutubeDLCookiesFilePath: undefined,
+      SkipVideoDataOverRide: undefined,
     },
     StreamValueRecordBoolean = undefined,
   ) {

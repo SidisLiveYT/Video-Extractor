@@ -24,6 +24,7 @@ async function Extractor(
     YoutubeDLCookiesFilePath: undefined,
   },
 ) {
+  ExtractOptions.SkipVideoDataOverRide = true;
   if (!Query || (Query && typeof Query !== 'string')) throw TypeError('Query is invalid or is not String');
   const SpotifyUrlRegex = /^(?:spotify:|(?:https?:\/\/(?:open|play)\.spotify\.com\/))(?:embed)?\/?(album|track|playlist|episode|show)(?::|\/)((?:[0-9a-zA-Z]){22})/;
   const SoundCloundUrlRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc)\/(.*)$/;
@@ -54,6 +55,7 @@ async function StreamDownloader(
     BypassRatelimit: true,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
+    SkipVideoDataOverRide: undefined,
   },
 ) {
   if (!Query || (Query && typeof Query !== 'string')) throw TypeError('Query is invalid or is not String');
@@ -73,7 +75,9 @@ async function StreamDownloader(
   return Filteration(await QueryResolver(Query, ExtractOptions, true));
 }
 function Filteration(DataStructure) {
-  DataStructure.tracks = Array.isArray(DataStructure.tracks) ? DataStructure.tracks : [DataStructure.tracks];
+  DataStructure.tracks = Array.isArray(DataStructure.tracks)
+    ? DataStructure.tracks
+    : [DataStructure.tracks];
   DataStructure.tracks = DataStructure.tracks.map((track) => {
     if (track.track) return track.track;
     return track;
@@ -89,11 +93,16 @@ function Filteration(DataStructure) {
     : DataStructure.error;
   if (DataStructure && DataStructure.tracks && DataStructure.tracks[0]) {
     DataStructure.tracks = DataStructure.tracks.filter(Boolean);
-    DataStructure.error = DataStructure.error && DataStructure.error[0] ? DataStructure.error.filter(Boolean) : DataStructure.error;
+    DataStructure.error = DataStructure.error && DataStructure.error[0]
+      ? DataStructure.error.filter(Boolean)
+      : DataStructure.error;
   }
   return DataStructure;
 }
 
 module.exports = {
-  Extractor, StreamDownloader, HumanTimeConversion, GetLyrics,
+  Extractor,
+  StreamDownloader,
+  HumanTimeConversion,
+  GetLyrics,
 };

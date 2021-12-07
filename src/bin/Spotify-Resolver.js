@@ -8,6 +8,7 @@ async function SpotifyScrapper(
     BypassRatelimit: true,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
+    SkipVideoDataOverRide: undefined,
   },
   StreamValueRecordBoolean = undefined,
 ) {
@@ -80,6 +81,7 @@ async function SpotifyScrapper(
       BypassRatelimit: true,
       YTCookies: undefined,
       YoutubeDLCookiesFilePath: undefined,
+      SkipVideoDataOverRide: undefined,
     },
     StreamValueRecordBoolean,
   ) {
@@ -158,7 +160,9 @@ async function SpotifyScrapper(
       dislikes: undefined,
     };
     const ProcessedTracks = await YoutubeDLExtractor.YoutubeDLExtraction(
-      `${track.title}`,
+      track.title && track.title.length >= 10
+        ? `${track.title}`
+        : `${track.title} | ${track.author}`,
       ExtractOptions,
       'spotify',
       track,

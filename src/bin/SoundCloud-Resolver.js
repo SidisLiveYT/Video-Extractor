@@ -7,6 +7,7 @@ async function SoundCloudExtractor(
     BypassRatelimit: true,
     YTCookies: undefined,
     YoutubeDLCookiesFilePath: undefined,
+    SkipVideoDataOverRide: undefined,
   },
   RegexValue,
   StreamValueRecordBoolean = undefined,
