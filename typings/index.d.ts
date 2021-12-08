@@ -6,6 +6,7 @@ export function Extractor(
 ): Promise<YoutubeDLData> | undefined
 export function StreamDownloader(
   Query: String,
+  ExtractOptions: ExtractOptions,
 ): Promise<YoutubeDLData> | undefined
 export function HumanTimeConversion(
   DurationMilliSeconds?: Number,

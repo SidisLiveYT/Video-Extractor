@@ -66,6 +66,7 @@ Data : {
       custom_extractor: `youtube-dl`,
       duration: Number
       human_duration: String,
+      video_stream: Object //Video Data for Video Extraction
       stream: String,  // using StreamDownloader() will give "stream Data" or else undefined or 0
       stream_url: String,
       stream_type: String,

@@ -1,3 +1,7 @@
+export type VideoStreamData = {
+  video: String
+  audio: String
+}
 export type YoutubeDLTrack = {
   Id: 0
   url: String
@@ -10,6 +14,7 @@ export type YoutubeDLTrack = {
   duration: Number
   human_duration: String
   preview_stream_url: String
+  video_stream: VideoStreamData | undefined
   stream: String | 'Socket'
   stream_url: String
   stream_type: String
@@ -37,4 +42,5 @@ export type ExtractOptions = {
   BypassRatelimit: Boolean | undefined
   YTCookies: String | undefined
   YoutubeDLCookiesFilePath: String | undefined
+  SkipVideoDataOverRide: Boolean | undefined,
 }

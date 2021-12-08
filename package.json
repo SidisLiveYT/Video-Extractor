@@ -1,6 +1,6 @@
 {
   "name": "video-extractor",
-  "version": "2.3.6",
+  "version": "2.4.0",
   "description": "Video Extractor supports youtube-dl stream download for @discordjs/voice Audio Resource , for other Strean packages or functions as it will return a stream and its type",
   "main": "./src/index.js",
   "module": "./src/index.mjs",
@@ -36,6 +36,7 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "commit": "git-cz",
+    "postinstall": "npm outdated && npm update && npm i play-dl && npm i @sidislive/youtube-dl-exec",
     "semantic-release": "semantic-release --branches main",
     "push": "git add . && npm run commit && git push",
     "docs": "jsdoc node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
@@ -63,11 +64,11 @@
     "npm": ">=7.0.0"
   },
   "dependencies": {
-    "@sidislive/youtube-dl-exec": "^1.0.2",
+    "@sidislive/youtube-dl-exec": "^1.0.3",
     "fs": "^0.0.1-security",
     "genius-lyrics": "^4.3.4",
     "is-url": "^1.2.4",
-    "play-dl": "^1.4.6",
+    "play-dl": "^1.4.8",
     "proxies-generator": "^1.0.5",
     "spotify-url-info": "^2.2.3"
   },
