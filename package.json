@@ -1,6 +1,6 @@
 {
   "name": "video-extractor",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "Video Extractor supports youtube-dl stream download for @discordjs/voice Audio Resource , for other Strean packages or functions as it will return a stream and its type",
   "main": "./src/index.js",
   "module": "./src/index.mjs",
@@ -36,7 +36,7 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "commit": "git-cz",
-    "preinstall": "npm i play-dl && npm i @sidislive/youtube-dl-exec",
+    "preinstall": "npm i play-dl && npm i @sidislive/youtube-dl-exec && npm outdated && npm update",
     "semantic-release": "semantic-release --branches main",
     "push": "git add . && npm run commit && git push",
     "docs": "jsdoc node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
