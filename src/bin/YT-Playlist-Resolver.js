@@ -1,4 +1,4 @@
-const { search, setToken } = require('play-dl');
+const { search } = require('play-dl');
 const YoutubeDLExtractor = require('./Track-Extractor');
 
 class YTPlaylistParser {
