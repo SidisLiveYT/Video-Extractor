@@ -79,7 +79,7 @@ function Filteration(DataStructure) {
     ? DataStructure.tracks
     : [DataStructure.tracks];
   DataStructure.tracks = DataStructure.tracks.map((track) => {
-    if (track.track) return track.track;
+    if (track && track.track) return track.track;
     return track;
   });
   DataStructure.error = DataStructure
