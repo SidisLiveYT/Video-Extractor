@@ -27,7 +27,7 @@ async function Extractor(
   ExtractOptions.SkipVideoDataOverRide = true;
   if (!Query || (Query && typeof Query !== 'string')) throw TypeError('Query is invalid or is not String');
   const SpotifyUrlRegex = /^(?:spotify:|(?:https?:\/\/(?:open|play)\.spotify\.com\/))(?:embed)?\/?(album|track|playlist|episode|show)(?::|\/)((?:[0-9a-zA-Z]){22})/;
-  const SoundCloundUrlRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc)\/(.*)$/;
+  const SoundCloundUrlRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc|soundcloud\.app\.goo\.gl)\/(.*)$/;
   if (Query.match(SpotifyUrlRegex)) return Filteration(await SpotifyExtractor(Query, ExtractOptions));
   if (Query.match(SoundCloundUrlRegex)) {
     return Filteration(
@@ -60,7 +60,7 @@ async function StreamDownloader(
 ) {
   if (!Query || (Query && typeof Query !== 'string')) throw TypeError('Query is invalid or is not String');
   const SpotifyUrlRegex = /^(?:spotify:|(?:https?:\/\/(?:open|play)\.spotify\.com\/))(?:embed)?\/?(album|track|playlist|episode|show)(?::|\/)((?:[0-9a-zA-Z]){22})/;
-  const SoundCloundUrlRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc)\/(.*)$/;
+  const SoundCloundUrlRegex = /^(?:(https?):\/\/)?(?:(?:www|m)\.)?(soundcloud\.com|snd\.sc|soundcloud\.app\.goo\.gl)\/(.*)$/;
   if (Query.match(SpotifyUrlRegex)) return Filteration(await SpotifyExtractor(Query, ExtractOptions, true));
   if (Query.match(SoundCloundUrlRegex)) {
     return Filteration(

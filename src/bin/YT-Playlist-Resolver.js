@@ -1,4 +1,4 @@
-const { search } = require('play-dl');
+const { playlist_info } = require('play-dl');
 const YoutubeDLExtractor = require('./Track-Extractor');
 
 class YTPlaylistParser {
@@ -13,10 +13,7 @@ class YTPlaylistParser {
     },
     StreamValueRecordBoolean = undefined,
   ) {
-    const PlaylistData = search(Url, {
-      limit: 100,
-      source: { yoututbe: 'playlist' },
-    });
+    const PlaylistData = (await playlist_info(Url)).videos;
     return await Promise.all(
       PlaylistData.map(
         async (Data) => await YoutubeDLExtractor.YoutubeDLExtraction(

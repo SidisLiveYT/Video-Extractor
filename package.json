@@ -1,6 +1,6 @@
 {
   "name": "video-extractor",
-  "version": "2.4.6",
+  "version": "2.4.7",
   "description": "Video Extractor supports youtube-dl stream download for @discordjs/voice Audio Resource , for other Strean packages or functions as it will return a stream and its type",
   "main": "./src/index.js",
   "module": "./src/index.mjs",
@@ -43,9 +43,9 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",
-    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-env": "^7.16.7",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.5.0",
+    "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "jsdoc": "^3.6.7",
@@ -68,10 +68,10 @@
     "fs": "^0.0.1-security",
     "genius-lyrics": "^4.3.5",
     "is-url": "^1.2.4",
-    "play-dl": "^1.6.8",
+    "play-dl": "^1.6.9",
     "proxies-generator": "^1.0.6",
     "spotify-url-info": "^2.2.3",
-    "user-agents": "^1.0.879"
+    "user-agents": "^1.0.883"
   },
   "directories": {
     "example": "example"
