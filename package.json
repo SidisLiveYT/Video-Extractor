@@ -63,14 +63,14 @@
     "npm": ">=7.0.0"
   },
   "dependencies": {
+    "@sidislive/youtube-dl-exec": "^1.0.3",
     "fs": "^0.0.1-security",
     "genius-lyrics": "^4.3.5",
     "is-url": "^1.2.4",
     "play-dl": "^1.7.8",
     "proxies-generator": "^1.0.6",
     "spotify-url-info": "^2.2.3",
-    "user-agents": "^1.0.893",
-    "youtube-dl-exec": "^2.0.2"
+    "user-agents": "^1.0.893"
   },
   "directories": {
     "example": "example"
