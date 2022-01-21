@@ -42,7 +42,9 @@ class YoutubeDLExtractor {
       ExtractOptions
       && ExtractOptions.Proxy
       && ExtractOptions.Proxy !== YoutubeDLExtractor.#Proxy
-    ) { YoutubeDLExtractor.#Proxy = ExtractOptions.Proxy; }
+    ) {
+      YoutubeDLExtractor.#Proxy = ExtractOptions.Proxy;
+    }
     if (
       ExtractOptions
       && ExtractOptions.YTCookies
@@ -56,8 +58,12 @@ class YoutubeDLExtractor {
       });
     }
     const ExtraCredentials = {};
-    if (YoutubeDLExtractor.#Proxy) { ExtraCredentials.proxy = YoutubeDLExtractor.#Proxy; }
-    if (YoutubeDLExtractor.#YoutubeDLCookiesFilePath) { ExtraCredentials.cookies = YoutubeDLExtractor.#YoutubeDLCookiesFilePath; }
+    if (YoutubeDLExtractor.#Proxy) {
+      ExtraCredentials.proxy = YoutubeDLExtractor.#Proxy;
+    }
+    if (YoutubeDLExtractor.#YoutubeDLCookiesFilePath) {
+      ExtraCredentials.cookies = YoutubeDLExtractor.#YoutubeDLCookiesFilePath;
+    }
     try {
       const YoutubeDLRawDatas = await YoutubeDL(
         SenderQuery,
@@ -118,13 +124,17 @@ class YoutubeDLExtractor {
           || `${error.message}`.includes('exit code 1')
           || `${error}`.includes('429')
           || `${error}`.includes('exit code 1'))
-      ) { YoutubeDLExtractor.#Proxy = (await randomOne(true)).url; }
+      ) {
+        YoutubeDLExtractor.#Proxy = (await randomOne(true)).url;
+      }
       PostTrackName = SecretDepth === 0 ? Query : PostTrackName;
       ++SecretDepth;
       const Value = (await search(Query, { limit: SecretDepth + 2 }))[
         SecretDepth
       ];
-      if (!Value || (Value && !Value.title)) { throw new Error(`[429] Song - "${PostTrackName}" got Ratelimited`); }
+      if (!Value || (Value && !Value.title)) {
+        throw new Error(`[429] Song - "${PostTrackName}" got Ratelimited`);
+      }
       const Song = await YoutubeDLExtractor.YoutubeDLExtraction(
         Value.title,
         ExtractOptions,
@@ -147,8 +157,12 @@ class YoutubeDLExtractor {
   static async #streamextractor(Url, SecretDepth = 0) {
     try {
       const ExtraCredentials = {};
-      if (YoutubeDLExtractor.#Proxy) { ExtraCredentials.proxy = YoutubeDLExtractor.#Proxy; }
-      if (YoutubeDLExtractor.#YoutubeDLCookiesFilePath) { ExtraCredentials.cookies = YoutubeDLExtractor.#YoutubeDLCookiesFilePath; }
+      if (YoutubeDLExtractor.#Proxy) {
+        ExtraCredentials.proxy = YoutubeDLExtractor.#Proxy;
+      }
+      if (YoutubeDLExtractor.#YoutubeDLCookiesFilePath) {
+        ExtraCredentials.cookies = YoutubeDLExtractor.#YoutubeDLCookiesFilePath;
+      }
       const YoutubeDLProcess = YoutubeDL.exec(
         Url,
         {
@@ -204,7 +218,10 @@ class YoutubeDLExtractor {
       if (!Url) return undefined;
       if (!Url.match(YoutubeUrlRegex)) return undefined;
 
-      const SourceStream = await stream(Url, { quality: 3 });
+      const SourceStream = await stream(Url, {
+        quality: 3,
+        discordPlayerCompatibility: true,
+      });
       return SourceStream;
     } catch (error) {
       if (SecretDepth >= 3) throw Error(`${error.message ?? error}`);
