@@ -311,50 +311,50 @@ class YoutubeDLExtractor {
         video:
               (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
                 ? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '2160p'
-                  ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('2160p')).url
+                  ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('2160p'))?.url
                   : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '1080p'
-                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('1080p')).url
+                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('1080p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '720p'
-                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('720p')).url
+                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('720p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '480p'
                     ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('480p')).url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '360p'
-                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('360p')).url
+                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('360p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '216p'
-                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('216p')).url
+                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('216p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '144p'
-                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('144p')).url
+                    ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('144p'))?.url
                     : undefined)
                   ?? undefined
                 : undefined)
               ?? (YoutubeDLRawData.requested_formats
               && YoutubeDLRawData.requested_formats[0]
                 ? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '2160p'
-                  ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('2160p')).url
+                  ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('2160p'))?.url
                   : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '1080p'
-                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('1080p')).url
+                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('1080p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '720p'
-                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('720p')).url
+                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('720p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '480p'
-                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('480p')).url
+                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('480p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '360p'
-                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('360p')).url
+                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('360p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '216p'
-                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('216p')).url
+                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('216p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '144p'
-                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('144p')).url
+                    ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('144p'))?.url
                     : undefined)
                   ?? undefined
                 : undefined)
@@ -363,25 +363,25 @@ class YoutubeDLExtractor {
               && YoutubeDLRawData.entries[0].formats
               && YoutubeDLRawData.entries[0].formats[0]
                 ? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '2160p'
-                  ? YoutubeDLRawData.entries[0].formats[0].find((rqformat) => rqformat.format_note.includes('2160p')).url
+                  ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('2160p'))?.url
                   : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '1080p'
-                    ? YoutubeDLRawData.entries[0].formats[0].find((rqformat) => rqformat.format_note.includes('1080p')).url
+                    ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('1080p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '720p'
-                    ? YoutubeDLRawData.entries[0].formats[0].find((rqformat) => rqformat.format_note.includes('720p')).url
+                    ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('720p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '480p'
-                    ? YoutubeDLRawData.entries[0].formats[0].find((rqformat) => rqformat.format_note.includes('480p')).url
+                    ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('480p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '360p'
-                    ? YoutubeDLRawData.entries[0].formats[0].find((rqformat) => rqformat.format_note.includes('360p')).url
+                    ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('360p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '216p'
-                    ? YoutubeDLRawData.entries[0].formats[0].find((rqformat) => rqformat.format_note.includes('216p')).url
+                    ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('216p'))?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '144p'
-                    ? YoutubeDLRawData.entries[0].formats[0].find((rqformat) => rqformat.format_note.includes('144p')).url
+                    ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('144p'))?.url
                     : undefined)
                   ?? undefined
                 : undefined)
@@ -390,63 +390,63 @@ class YoutubeDLExtractor {
               && YoutubeDLRawData.entries[0].requested_formats
               && YoutubeDLRawData.entries[0].requested_formats[0]
                 ? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '2160p'
-                  ? YoutubeDLRawData.entries[0].requested_formats[0].find(
+                  ? YoutubeDLRawData.entries[0].requested_formats.find(
                     (rqformat) => rqformat.format_note.includes('2160p'),
-                  ).url
+                  )?.url
                   : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '1080p'
-                    ? YoutubeDLRawData.entries[0].requested_formats[0].find(
+                    ? YoutubeDLRawData.entries[0].requested_formats.find(
                       (rqformat) => rqformat.format_note.includes('1080p'),
-                    ).url
+                    )?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '720p'
-                    ? YoutubeDLRawData.entries[0].requested_formats[0].find(
+                    ? YoutubeDLRawData.entries[0].requested_formats.find(
                       (rqformat) => rqformat.format_note.includes('720p'),
-                    ).url
+                    )?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '480p'
-                    ? YoutubeDLRawData.entries[0].requested_formats[0].find(
+                    ? YoutubeDLRawData.entries[0].requested_formats.find(
                       (rqformat) => rqformat.format_note.includes('480p'),
-                    ).url
+                    )?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '360p'
-                    ? YoutubeDLRawData.entries[0].requested_formats[0].find(
+                    ? YoutubeDLRawData.entries[0].requested_formats.find(
                       (rqformat) => rqformat.format_note.includes('360p'),
-                    ).url
+                    )?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '216p'
-                    ? YoutubeDLRawData.entries[0].requested_formats[0].find(
+                    ? YoutubeDLRawData.entries[0].requested_formats.find(
                       (rqformat) => rqformat.format_note.includes('216p'),
-                    ).url
+                    )?.url
                     : undefined)
                   ?? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '144p'
-                    ? YoutubeDLRawData.entries[0].requested_formats[0].find(
+                    ? YoutubeDLRawData.entries[0].requested_formats.find(
                       (rqformat) => rqformat.format_note.includes('144p'),
-                    ).url
+                    )?.url
                     : undefined)
                   ?? undefined
                 : undefined),
         audio:
               (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
-                ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('tiny')).url
+                ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('tiny'))?.url
                 : undefined)
               ?? (YoutubeDLRawData.requested_formats
               && YoutubeDLRawData.requested_formats[0]
-                ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('tiny')).url
+                ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('tiny'))?.url
                 : undefined)
               ?? (YoutubeDLRawData.entries
               && YoutubeDLRawData.entries[0]
               && YoutubeDLRawData.entries[0].formats
               && YoutubeDLRawData.entries[0].formats[0]
-                ? YoutubeDLRawData.entries[0].formats[0].find((rqformat) => rqformat.format_note.includes('tiny')).url
+                ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('tiny'))?.url
                 : undefined)
               ?? (YoutubeDLRawData.entries
               && YoutubeDLRawData.entries[0]
               && YoutubeDLRawData.entries[0].requested_formats
               && YoutubeDLRawData.entries[0].requested_formats[0]
-                ? YoutubeDLRawData.entries[0].requested_formats[0].find(
+                ? YoutubeDLRawData.entries[0].requested_formats.find(
                   (rqformat) => rqformat.format_note.includes('tiny'),
-                ).url
+                )?.url
                 : undefined),
       }
       : undefined;
