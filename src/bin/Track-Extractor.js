@@ -169,7 +169,7 @@ class YoutubeDLExtractor {
           o: '-',
           q: '',
           f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',
-          r: '6.9M',
+          r: '100k',
           ...ExtraCredentials,
         },
         {
@@ -309,7 +309,7 @@ class YoutubeDLExtractor {
         || !SkipVideoDataOverRide)
       ? {
         video:
-              (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
+              (YoutubeDLRawData?.formats?.[0]
                 ? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '2160p'
                   ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('2160p'))?.url
                   : undefined)
@@ -333,8 +333,7 @@ class YoutubeDLExtractor {
                     : undefined)
                   ?? undefined
                 : undefined)
-              ?? (YoutubeDLRawData.requested_formats
-              && YoutubeDLRawData.requested_formats[0]
+              ?? (YoutubeDLRawData?.requested_formats?.[0]
                 ? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '2160p'
                   ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('2160p'))?.url
                   : undefined)
@@ -358,10 +357,7 @@ class YoutubeDLExtractor {
                     : undefined)
                   ?? undefined
                 : undefined)
-              ?? (YoutubeDLRawData.entries
-              && YoutubeDLRawData.entries[0]
-              && YoutubeDLRawData.entries[0].formats
-              && YoutubeDLRawData.entries[0].formats[0]
+              ?? (YoutubeDLRawData?.entries?.[0]?.formats?.[0]
                 ? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '2160p'
                   ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('2160p'))?.url
                   : undefined)
@@ -385,10 +381,7 @@ class YoutubeDLExtractor {
                     : undefined)
                   ?? undefined
                 : undefined)
-              ?? (YoutubeDLRawData.entries
-              && YoutubeDLRawData.entries[0]
-              && YoutubeDLRawData.entries[0].requested_formats
-              && YoutubeDLRawData.entries[0].requested_formats[0]
+              ?? (YoutubeDLRawData?.entries?.[0]?.requested_formats?.[0]
                 ? (!SkipVideoDataOverRide || SkipVideoDataOverRide === '2160p'
                   ? YoutubeDLRawData.entries[0].requested_formats.find(
                     (rqformat) => rqformat.format_note.includes('2160p'),
@@ -427,23 +420,16 @@ class YoutubeDLExtractor {
                   ?? undefined
                 : undefined),
         audio:
-              (YoutubeDLRawData.formats && YoutubeDLRawData.formats[0]
+              (YoutubeDLRawData?.formats?.[0]
                 ? YoutubeDLRawData.formats.find((rqformat) => rqformat.format_note.includes('tiny'))?.url
                 : undefined)
-              ?? (YoutubeDLRawData.requested_formats
-              && YoutubeDLRawData.requested_formats[0]
+              ?? (YoutubeDLRawData?.requested_formats?.[0]
                 ? YoutubeDLRawData.requested_formats.find((rqformat) => rqformat.format_note.includes('tiny'))?.url
                 : undefined)
-              ?? (YoutubeDLRawData.entries
-              && YoutubeDLRawData.entries[0]
-              && YoutubeDLRawData.entries[0].formats
-              && YoutubeDLRawData.entries[0].formats[0]
+              ?? (YoutubeDLRawData?.entries?.[0]?.formats?.[0]
                 ? YoutubeDLRawData.entries[0].formats.find((rqformat) => rqformat.format_note.includes('tiny'))?.url
                 : undefined)
-              ?? (YoutubeDLRawData.entries
-              && YoutubeDLRawData.entries[0]
-              && YoutubeDLRawData.entries[0].requested_formats
-              && YoutubeDLRawData.entries[0].requested_formats[0]
+              ?? (YoutubeDLRawData?.entries?.[0]?.requested_formats?.[0]
                 ? YoutubeDLRawData.entries[0].requested_formats.find(
                   (rqformat) => rqformat.format_note.includes('tiny'),
                 )?.url
@@ -461,9 +447,7 @@ class YoutubeDLExtractor {
               ?? YoutubeDLRawData.webpage_url
               ?? undefined
             : undefined)
-            ?? (YoutubeDLRawData.entries
-            && YoutubeDLRawData.entries[0]
-            && YoutubeDLRawData.entries[0].webpage_url
+            ?? (YoutubeDLRawData?.entries?.[0]?.webpage_url
               ? YoutubeDLRawData.entries[0].video_url
                 ?? YoutubeDLRawData.entries[0].webpage_url
                 ?? undefined
@@ -498,9 +482,7 @@ class YoutubeDLExtractor {
             ?? YoutubeDLRawData.webpage_url
             ?? undefined
           : undefined)
-        ?? (YoutubeDLRawData.entries
-        && YoutubeDLRawData.entries[0]
-        && YoutubeDLRawData.entries[0].webpage_url
+        ?? (YoutubeDLRawData?.entries?.[0]?.webpage_url
         && !YoutubeDLRawData.entries[0].extractor.includes('search')
           ? YoutubeDLRawData.entries[0].video_url
             ?? YoutubeDLRawData.entries[0].webpage_url
@@ -514,9 +496,7 @@ class YoutubeDLExtractor {
           && !YoutubeDLRawData.extractor.includes('search'))
           ? YoutubeDLRawData.display_id
           : undefined)
-        ?? (YoutubeDLRawData.entries
-        && YoutubeDLRawData.entries[0]
-        && YoutubeDLRawData.entries[0].display_id
+        ?? (YoutubeDLRawData?.entries?.[0]?.display_id
           ? YoutubeDLRawData.entries[0].display_id
             ?? YoutubeDLRawData.entries[0].id
           : undefined)
