@@ -71,7 +71,7 @@
     "is-url": "^1.2.4",
     "play-dl": "^1.8.7",
     "proxies-generator": "^1.0.6",
-    "spotify-url-info": "^2.2.5",
+    "spotify-url-info": "^3.0.2",
     "user-agents": "^1.0.922"
   },
   "directories": {
