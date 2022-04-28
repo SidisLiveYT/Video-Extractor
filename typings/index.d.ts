@@ -45,4 +45,4 @@ declare const _default: {
 export default _default;
 
 declare type quickExtract = typeof videoExtractor.quickExtract;
-export { videoExtractor, quickExtractor };
+export { videoExtractor, quickExtract };
