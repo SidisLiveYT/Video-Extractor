@@ -32,57 +32,63 @@ npm install video-extractor@latest
 
 Extractor Video/Playlist/Album Data from any Platform :-
 
-```
-const { Extractor , StreamDownloader , HumanTimeConversion } = require('video-extractor') //For CommonJS
+```js
+const { quickExtract , videoExtractor } = require('video-extractor') //For CommonJS
                             //OR
-import { Extractor, StreamDownloader , HumanTimeConversion } from 'video-extractor' //for ES6
+import { quickExtract , videoExtractor } from 'video-extractor' //for ES6/TypeScript
 
 
-var Data = await Extractor(Url || 'Despacito', {
-  Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
-  BypassRatelimit: true, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
-  YTCookies: undefined, //Youtube Cookies Value ( a very Big String here )
-  YoutubeDLCookiesFilePath: undefined, //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
-})
-var StreamData = await StreamDownloader(Url || 'Despacito')
-var HumanTime = HumanTimeConversion(MilliSeconds)
+var Data = await quickExtract.softExtractor(Url || 'Despacito'})
+var StreamData = await quickExtract.streamExtractor(Url || 'Despacito')
 
 ```
 
 ## Structure of Data/Track
 
-```
+```js
 Data : {
   playlist : Boolean,
   tracks : [
-    {
-      Id: 0,
-      url: String,
-      video_Id: String,
-      title: String,
-      author: String,
-      author_link: String,
-      description: String,
-      custom_extractor: `youtube-dl`,
-      duration: Number
-      human_duration: String,
-      video_stream: Object //Video Data for Video Extraction
-      stream: String,  // using StreamDownloader() will give "stream Data" or else undefined or 0
-      stream_url: String,
-      stream_type: String,
-      stream_duration: Number,
-      stream_video_Id: String,
-      stream_human_duration: Number,
-      orignal_extractor: 'youtube' | 'spotify' | 'facebook' | 'arbitrary',
-      thumbnail: String,
-      channelId: 0 || String,
-      channel_url: String,
-      lyrics: String,
-      likes: 0,
-      is_live: false,
-      dislikes: 0,
+  Track {
+    trackId: 1,
+    url: 'https://vimeo.com/246660563',
+    videoId: '246660563',
+    title: 'Fly - imai ft. 79, Kaho Nakamura',
+    description: "Stop-motioned various kinds of mochi at my grandparents' place.\n" +
+      'Direction/animation: Baku Hashimoto\n' +
+      'Logo design: 79\n' +
+      'Track by imai (group_inou) featuring 79, Kaho Nakamura (中村佳穂)\n' +
+      'soundcloud.com/imai/psep\n' +
+      'Behind the scene: baku89.com/making-of/fly',
+    author: { Id: undefined, name: 'Baku 麦', url: 'https://vimeo.com/baku89' },      
+    extractorModel: { orignal: 'vimeo', custom: 'youtube-dl' },
+    duration: { ms: 194000, readable: '3 Minutes 14 Seconds' },
+    thumbnail: {
+      Id: '246660563',
+      metadata: 'https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F696079667-94a0641db16295fc9c32803c15331b4dea14ded3dcdcad3101a8b278c6c04bf1-d_1280x720&src1=https%3A%2F%2Ff.vimeocdn.com%2Fimages_v6%2Fshare%2Fplay_icon_overlay.png'
+    },
+    channel: { name: 'Baku 麦', Id: 'Baku 麦', url: 'https://vimeo.com/baku89' },
+    views: 60812,
+    fps: 15,
+    keywords: undefined,
+    comments: undefined,
+    subtitles: { en: [Array] },
+    isLive: false,
+    ratings: { likes: 2332, dislikes: 0 },
+    videoMetadata: {
+      video: [Object],
+      audio: 'https://150vod-adaptive.akamaized.net/exp=1651128988~acl=%2F1cf9dbe0-76c9-4d13-9252-3a71c1c0cbc5%2F%2A~hmac=33df1c437a48fe5a78f855ca694e16721fee7ef31b594bd38cbaa5caa3f61238/1cf9dbe0-76c9-4d13-9252-3a71c1c0cbc5/sep/audio/0173d7d2/playlist.m3u8'
+    },
+    streamMetadata: {
+      preview: undefined,
+      url: 'https://150vod-adaptive.akamaized.net/exp=1651128988~acl=%2F1cf9dbe0-76c9-4d13-9252-3a71c1c0cbc5%2F%2A~hmac=33df1c437a48fe5a78f855ca694e16721fee7ef31b594bd38cbaa5caa3f61238/1cf9dbe0-76c9-4d13-9252-3a71c1c0cbc5/sep/audio/0173d7d2/playlist.m3u8',
+      buffer: [Socket],
+      type: undefined,
+      videoId: '246660563',
+      duration: [Object]
     }
-  ],
+  }
+],
   error: String | Error |  Error[]  | undefined
 }
 ```
@@ -100,42 +106,13 @@ Data : {
        for example  /path/to/cookies/file.txt.  Note that  the
        cookies  file  must  be  in Mozilla/Netscape format and the first line of the cookies file
        must be either # HTTP Cookie File or  # Netscape HTTP Cookie File.   Make  sure  you  have
-       correct  newline  format  (https://en.wikipedia.org/wiki/Newline)  in the cookies file and
+       correct  newline  format  (<https://en.wikipedia.org/wiki/Newline>)  in the cookies file and
        convert newlines if necessary to correspond with your OS, namely CRLF (\r\n) for  Windows,
        LF  (\n)  for  Linux  and  CR  (\r)  for  Mac  OS.  HTTP Error 400: Bad Request when using
        Cookies Options is a good sign of invalid newline format.
 
        Passing cookies to youtube-dl is  a  good  way  to  workaround  login  when  a  particular
        extractor  does  not  implement it explicitly.
-```
-
-## Use-Case for @discordjs/voice Package
-
-```
-const { StreamDownloader } = require('video-extractor')
-const { createAudioResource } = require('@discordjs/voice')
-
-const Data = await StreamDownloader('Despacito', {
-  Proxy: `http://127.0.0.1:2267`, //Proxy -> IP:Port
-  BypassRatelimit: true, //Boolean value | if true , then Track will take time to fetch based on Non-Ratelimit Songs and Error have to be handled
-  YTCookies: undefined, //Youtube Cookies Value ( a very Big String here )
-  YoutubeDLCookiesFilePath: undefined, //Fetch a Cookie.txt which is a Netscape Cookie File and give path file ("./path/to/file") like this
-})
-
-if(Data.error) throw error;
-
-var Audio_Resource = createAudioResource(Data.tracks[0].stream ,{
-  inputType: Data.tracks[0].stream_type
-})
-
-
-/*
-
-- Rest is mentioned in @discordjs/voice examples , from here "Audio_Resource" is important
-- Extractor() is same as StreamDownloader() but it will not download info related to Streams like - "stream","stream_type" and e.t.c , just the info about the Query
-
-*/
-
 ```
 
 ## Links

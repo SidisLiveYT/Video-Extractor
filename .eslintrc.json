@@ -25,6 +25,9 @@
     "no-nested-ternary": "off",
     "no-unused-expressions": "off",
     "default-param-last": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-underscore-dangle": "off",
+    "no-promise-executor-return": "off",
+    "new-cap": "off"
   }
 }

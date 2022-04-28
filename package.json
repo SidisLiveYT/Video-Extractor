@@ -1,6 +1,6 @@
 {
   "name": "video-extractor",
-  "version": "2.4.13",
+  "version": "3.0.0",
   "description": "Video Extractor supports youtube-dl stream download for @discordjs/voice Audio Resource , for other Strean packages or functions as it will return a stream and its type",
   "main": "./src/index.js",
   "module": "./src/index.mjs",
@@ -46,9 +46,9 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.8.0",
+    "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-import": "^2.26.0",
     "jsdoc": "^3.6.10",
     "jsdoc-babel": "^0.5.0",
     "jsdoc-skyceil": "^2.0.0",
@@ -65,14 +65,18 @@
     "npm": ">=7.0.0"
   },
   "dependencies": {
-    "@sidislive/youtube-dl-exec": "^1.0.3",
+    "@sidislive/soundcloud-scraper": "^1.0.1",
     "fs": "^0.0.1-security",
-    "genius-lyrics": "^4.3.5",
     "is-url": "^1.2.4",
-    "play-dl": "^1.8.7",
+    "isomorphic-unfetch": "^3.1.0",
+    "lyrics-finder": "^21.7.0",
+    "path": "^0.12.7",
+    "play-dl": "^1.9.4",
     "proxies-generator": "^1.0.6",
-    "spotify-url-info": "^2.2.5",
-    "user-agents": "^1.0.922"
+    "random-useragent": "^0.5.0",
+    "reverbnation-scraper": "^2.0.0",
+    "spotify-url-info": "^3.1.0",
+    "youtube-dl-exec": "^2.0.11"
   },
   "directories": {
     "example": "example"

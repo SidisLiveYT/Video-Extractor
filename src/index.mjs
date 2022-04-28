@@ -1,7 +1,6 @@
-import YoutubeDLDownloader from './index.js'
+// eslint-disable-next-line quotes
+import Handlers from "./index.js";
 
-export default YoutubeDLDownloader
-export const StreamDownloader = YoutubeDLDownloader.StreamDownloader
-export const Extractor = YoutubeDLDownloader.Extractor
-export const HumanTimeConversion = YoutubeDLDownloader.HumanTimeConversion
-export const GetLyrics = YoutubeDLDownloader.GetLyrics
+export default Handlers;
+export const { quickExtract } = Handlers;
+export const { videoExtractor } = Handlers;

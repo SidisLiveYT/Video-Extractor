@@ -16,7 +16,7 @@ var YoutubeDLTrack = {
   stream_duration: 0,
   stream_video_Id: undefined,
   stream_human_duration: undefined,
-  orignal_extractor: null | 'youtube' | 'spotify' | 'facebook' | 'arbitrary',
+  orignalExtractor: null | 'youtube' | 'spotify' | 'facebook' | 'arbitrary',
   thumbnail: null,
   channelId: 'none' | 0,
   channel_url: null,
