@@ -24,7 +24,7 @@ Video Extractor is a Extractor/Scrapper/Downloader and Helps Players to fetch da
 
 **Node.js 16 or newer is required.**
 
-```
+```sh
 npm install video-extractor@latest
 ```
 

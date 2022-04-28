@@ -219,4 +219,8 @@ class videoExtractor extends EventEmitter {
   static quickExtract = new videoExtractor();
 }
 
-module.exports = { videoExtractor, quickExtract: videoExtractor.quickExtract };
+module.exports = {
+  default: { videoExtractor, quickExtract: videoExtractor.quickExtract },
+  videoExtractor,
+  quickExtract: videoExtractor.quickExtract,
+};
