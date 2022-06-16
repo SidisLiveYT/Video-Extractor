@@ -255,11 +255,11 @@ class youtubeDLEngine {
           trackId: __trackBlueprint?.Id ?? __rawTrack?.Id ?? 0,
           url:
             __trackBlueprint?.url
-            ?? __rawTrack?.url
+            ?? __rawTrack?.entries?.[0]?.video_url
+            ?? __rawTrack?.entries?.[0]?.webpage_url
             ?? __rawTrack?.webpage_url
             ?? __rawTrack?.video_url
-            ?? __rawTrack?.entries?.[0]?.video_url
-            ?? __rawTrack?.entries?.[0]?.webpage_url,
+            ?? __rawTrack?.url,
           videoId:
             __trackBlueprint?.video_Id
             ?? __trackBlueprint?.videoId
