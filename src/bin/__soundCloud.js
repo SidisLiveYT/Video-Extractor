@@ -71,7 +71,15 @@ class soundCloud {
           if (
             !rawTrack
             || (__cacheCount
-              && __cacheCount >= __scrapperOptions?.fetchOptions?.fetchLimit)
+              && __cacheCount >= __scrapperOptions?.fetchOptions?.fetchLimit
+              && !(
+                Boolean(
+                  __rawRegex?.[3]?.includes('/sets/')
+                    || __rawRegex?.[2]?.includes('/sets/')
+                    || __rawRegex?.[4]?.includes('/sets/')
+                    || rawQuery.includes('/sets/'),
+                ) && __scrapperOptions?.fetchOptions?.skipPlaylistLimit
+              ))
           ) return undefined;
           __cacheGarbage = await soundCloud.__trackParser(
             rawTrack,

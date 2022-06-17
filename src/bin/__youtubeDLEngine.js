@@ -113,6 +113,10 @@ class youtubeDLEngine {
       && !Number.isNaN(__scrapperOptions?.fetchOptions?.fetchLimit)
       && parseInt(__scrapperOptions?.fetchOptions?.fetchLimit) > 0
       && parseInt(__scrapperOptions?.fetchOptions?.fetchLimit) < Infinity
+      && !(
+        /[?&]list=([^#\&\?]+)/.test(rawQuery)
+        && __scrapperOptions?.fetchOptions?.skipPlaylistLimit
+      )
     ) {
       __searchResults = __searchResults
         ?.slice(0, parseInt(__scrapperOptions?.fetchOptions?.fetchLimit ?? 1))
@@ -190,9 +194,7 @@ class youtubeDLEngine {
     if (rawQuery && Array.isArray(rawQuery) && rawQuery?.length > 0) {
       __rawFetchData = Promise.all(
         rawQuery?.map(async (query) => {
-          query = youtubeDLEngine.__testUri(query)
-            ? query
-            : `ytsearch:${query}`;
+          query = youtubeDLEngine.__testUri(query) ? query : `ytsearch:${query}`;
           return await youtubeDLCore(
             query,
             {

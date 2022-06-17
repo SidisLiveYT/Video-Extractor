@@ -45,6 +45,7 @@ class videoExtractor extends EventEmitter {
       cookiesFile: undefined,
       rawCookies: undefined,
       userAgents: undefined,
+      skipPlaylistLimit: true,
     },
     __scrapperOptions: {
       fetchLyrics: true,
@@ -58,6 +59,7 @@ class videoExtractor extends EventEmitter {
         cookiesFile: undefined,
         rawCookies: undefined,
         userAgents: undefined,
+        skipPlaylistLimit: true,
       },
       streamDownload: false,
     },
@@ -94,11 +96,7 @@ class videoExtractor extends EventEmitter {
       if (spotify.__test(rawQuery)) return await spotify.__extractor(rawQuery, __scrapperOptions, this);
       if (soundcloud.__test(rawQuery)) return await soundcloud.__extractor(rawQuery, __scrapperOptions, this);
       if (reverbnation.__test(rawQuery)) {
-        return await reverbnation.__extractor(
-          rawQuery,
-          __scrapperOptions,
-          this,
-        );
+        return await reverbnation.__extractor(rawQuery, __scrapperOptions, this);
       }
       if (youtube.__test(rawQuery)) return await youtube.__extractor(rawQuery, __scrapperOptions, this);
       if (youtubeDLEngine.__testUri(rawQuery)) {
